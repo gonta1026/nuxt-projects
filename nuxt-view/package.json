@@ -1,0 +1,18 @@
+{
+  "name": "nuxt-view",
+  "version": "1.0.0",
+  "description": "My stylish Nuxt.js project",
+  "author": "gonta1026",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "nuxt": "^2.0.0"
+  },
+  "devDependencies": {}
+}
