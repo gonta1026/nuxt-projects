@@ -1,5 +1,11 @@
 <template>
   <form>
+    <div>
+      <p>{{form}}</p>
+    </div>
+    <div>
+      <p>{{$v.form.foods.$error}}</p>
+    </div>
     <div class="form-group">
       <label>性別</label>
       <div>
@@ -27,10 +33,49 @@
         件名は200文字以内で入力してください。
       </div>
     </div>
+    
+    <div class="form-group">
+      <label>メール</label>
+      <input type="text" class="form-control" aria-label="メール" v-model="$v.form.email.$model">
+      <div class="text-danger" v-if="$v.form.email.$error && !$v.form.email.required">
+        メールアドレスを入力してください。
+      </div>
+      <div class="text-danger" v-if="$v.form.email.$error && !$v.form.email.email && form.submitCheck">
+        メールアドレスは正しい形式で入力してください。
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>開始日</label>
+        <input type="date" class="form-control" aria-label="開始日" v-model="$v.form.start_date.$model">
+      <div class="text-danger">
+        開始日を入力してください。
+      </div>
+      <div class="text-danger">
+        開始日を終了日より前の日で入力してください。
+      </div>
+    </div>
+   
+    <div class="form-group">
+      <label>終了日</label>
+        <input type="date" class="form-control" aria-label="開始日" v-model="$v.form.end_date.$model">
+      <div class="text-danger">
+        終了日を入力してください。
+      </div>
+      <div class="text-danger">
+        終了日を開始日より前の日で入力してください。
+      </div>
+      <div class="text-danger">
+        終了日を開始日より前の日で入力してください。
+      </div>
+    </div>
+
+
+
     <div class="form-group">
       <label>部署</label>
       <select class="form-control" aria-label="部署" v-model="$v.form.subject.$model">
-        <option :value="null">選択してください</option>
+        <option value="null">選択してください</option>
         <option value="somu">総務部</option>
         <option value="sales">営業部</option>
         <option value="hanbai">販売部</option>
@@ -39,6 +84,19 @@
         部署を選択してください。
       </div>
     </div>
+    <div class="form-group">
+      <label>好きな食べ物</label>
+      <select class="form-control" aria-label="好きな食べ物" v-model="$v.form.foods.$model" multiple>
+        <option :value="apple">りんご</option>
+        <option value="banana">バナナ</option>
+        <option value="meron">メロン</option>
+        <option value="ichigo">いちご</option>
+      </select>
+      <div class="text-danger" v-if="$v.form.foods.$error">
+         好きな食べ物は選択してください。
+      </div>
+    </div>
+
     <div class="form-group">
       <label>本文</label>
       <textarea type="text" class="form-control" rows="5" aria-label="本文" v-model="$v.form.body.$model"/>
@@ -61,15 +119,11 @@
 </template>
 
 <script>
-  import {maxLength, minLength, required} from "vuelidate/lib/validators"
+  import {maxLength, minLength, required, email, minValue, maxValue} from "vuelidate/lib/validators"
 
-  const is = (param) => {
-    return (value) => {
-      return value === param
-    }
-  }
+  const is = param =>value => value === param;
 
-  export default {
+export default {
     props: {
       value: {
         type: Object,
@@ -78,17 +132,18 @@
     },
     data() {
       return {
-        form: null
+        form: null,
       }
     },
     mounted() {
-      // this.form = {...this.value}
-      this.form = this.value
+      this.form = {...this.value}
+      // this.form = this.value
     },
     methods: {
       submit() {
         this.$v.$touch()
         if (this.$v.$invalid) {
+          this.form.submitCheck = true; // 送信後に表示してほしいエラーにはこの判定を使う。
           console.log("バリデーションエラー")
         } else {
           this.$emit("submit", this.$v);
@@ -101,9 +156,25 @@
           required,
           maxLength: maxLength(200)
         },
+        email: {
+          required,
+          email
+        },
+        // start_date: {
+        //   required,
+        //   minValue
+        // },
+        // end_date: {
+        //   required,
+        //   maxValue
+        // },
         body: {
           required,
-          minLength: minLength(100)
+          minValue: minLength(100)
+        },
+        foods: {
+          // nullCheack
+          required
         },
         gender: {required},
         subject: {required},

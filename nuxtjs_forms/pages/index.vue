@@ -18,17 +18,22 @@
       return {
         form: {
           title: "",
+          email: "",
+          start_date: "",
+          end_date: "",
           body: "",
+          foods: "",
           gender: null,
           subject: null,
-          check: false
+          check: false,
+          submitCheck: false
         }
       }
     },
     methods:{
       submit($v){
-        console.log($v.form.$model)
-        this.form.body = "";
+        console.log($v.form.$model);
+        this.form.body = "";        
       }
     }
   }
