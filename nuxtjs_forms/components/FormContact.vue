@@ -3,8 +3,13 @@
     <div>
       <p>{{form}}</p>
     </div>
+    <hr>
     <div>
-      <p>{{$v.form.foods.$error}}</p>
+      <p>{{$v.form.start_date}}</p>
+    </div>
+    <hr>
+    <div>
+      <p>{{hobby}}</p>
     </div>
     <div class="form-group">
       <label>性別</label>
@@ -44,33 +49,34 @@
         メールアドレスは正しい形式で入力してください。
       </div>
     </div>
-
+    <!-- 終了日が入力されているかををウオッチ -->
+    <!-- 本日以降の日付で入力されないといけない。 -->
+  
     <div class="form-group">
       <label>開始日</label>
         <input type="date" class="form-control" aria-label="開始日" v-model="$v.form.start_date.$model">
-      <div class="text-danger">
+      <div class="text-danger" v-if="$v.form.start_date.$error && !$v.form.start_date.required">
         開始日を入力してください。
       </div>
-      <div class="text-danger">
+      <div class="text-danger" v-if="$v.form.start_date.$error && !$v.form.start_date.minValue">
         開始日を終了日より前の日で入力してください。
       </div>
     </div>
-   
+
+    <!-- 開始日が入力されているかをウオッチ。 -->
+    <!-- 本日以降の日付で入力されていないといけない。 -->
+
+
     <div class="form-group">
       <label>終了日</label>
         <input type="date" class="form-control" aria-label="開始日" v-model="$v.form.end_date.$model">
-      <div class="text-danger">
+      <div class="text-danger" v-if="$v.form.end_date.$error && !$v.form.end_date.required">
         終了日を入力してください。
       </div>
       <div class="text-danger">
         終了日を開始日より前の日で入力してください。
       </div>
-      <div class="text-danger">
-        終了日を開始日より前の日で入力してください。
-      </div>
     </div>
-
-
 
     <div class="form-group">
       <label>部署</label>
@@ -84,10 +90,13 @@
         部署を選択してください。
       </div>
     </div>
-    <div class="form-group">
+
+    <!-- foodsでmultipleにするとコンソールでエラーがでる。-->
+
+    <!-- <div class="form-group">
       <label>好きな食べ物</label>
-      <select class="form-control" aria-label="好きな食べ物" v-model="$v.form.foods.$model" multiple>
-        <option :value="apple">りんご</option>
+      <select v-bind:multiple="isMultiple" class="form-control" aria-label="好きな食べ物" v-model="$v.form.foods.$model">
+        <option value="banana">りんご</option>
         <option value="banana">バナナ</option>
         <option value="meron">メロン</option>
         <option value="ichigo">いちご</option>
@@ -95,7 +104,14 @@
       <div class="text-danger" v-if="$v.form.foods.$error">
          好きな食べ物は選択してください。
       </div>
-    </div>
+    </div> -->
+
+    <select class="form-control" aria-label="好きな食べ物" v-model="hobby" multiple>
+        <option value="banana">バスケ</option>
+        <option value="soccer">サッカー</option>
+        <option value="meron">野球</option>
+        <option value="ichigo">ダンス</option>
+    </select>
 
     <div class="form-group">
       <label>本文</label>
@@ -119,23 +135,36 @@
 </template>
 
 <script>
-  import {maxLength, minLength, required, email, minValue, maxValue} from "vuelidate/lib/validators"
 
+  import {maxLength, minLength, required, email} from "vuelidate/lib/validators"
+  import moment from "moment"
   const is = param =>value => value === param;
+  // moment(new Date()).format('YYYY/MM/DD')
+  const isDate = (value) => {
+  return value === true
+}
 
 export default {
     props: {
       value: {
         type: Object,
         required: true
+      },
+    },
+    filters: {
+      datefilter: function(date){
+        return moment(date).format('YYYY/MM/DD');
       }
     },
     data() {
       return {
         form: null,
+        isMultiple: true,
+        hobby: []
       }
     },
     mounted() {
+      console.log(this.value)
       this.form = {...this.value}
       // this.form = this.value
     },
@@ -160,20 +189,20 @@ export default {
           required,
           email
         },
-        // start_date: {
-        //   required,
-        //   minValue
-        // },
-        // end_date: {
-        //   required,
-        //   maxValue
-        // },
+        start_date: {
+          required,
+          isDate: {
+            isDate: isDate(Date)
+          }
+        },
+        end_date: {
+          required,
+        },
         body: {
           required,
           minValue: minLength(100)
         },
         foods: {
-          // nullCheack
           required
         },
         gender: {required},

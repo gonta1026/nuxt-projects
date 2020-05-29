@@ -9,7 +9,7 @@
 
 <script>
   import FormContact from "~/components/FormContact.vue"
-
+  import moment from "moment"
   export default {
     components:{
       FormContact
@@ -22,7 +22,7 @@
           start_date: "",
           end_date: "",
           body: "",
-          foods: "",
+          foods: [],
           gender: null,
           subject: null,
           check: false,
