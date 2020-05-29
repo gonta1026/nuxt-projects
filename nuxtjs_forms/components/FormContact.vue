@@ -1,16 +1,5 @@
 <template>
   <form>
-    <div>
-      <p>{{form}}</p>
-    </div>
-    <hr>
-    <div>
-      <p>{{$v.form.start_date}}</p>
-    </div>
-    <hr>
-    <div>
-      <p>{{hobby}}</p>
-    </div>
     <div class="form-group">
       <label>性別</label>
       <div>
@@ -26,9 +15,8 @@
           性別を選択してください。
         </div>
       </div>
-
     </div>
-    <div class="form-group">
+     <div class="form-group">
       <label>件名</label>
       <input type="text" class="form-control" aria-label="件名" v-model="$v.form.title.$model">
       <div class="text-danger" v-if="$v.form.title.$error && !$v.form.title.required">
@@ -38,7 +26,7 @@
         件名は200文字以内で入力してください。
       </div>
     </div>
-    
+
     <div class="form-group">
       <label>メール</label>
       <input type="text" class="form-control" aria-label="メール" v-model="$v.form.email.$model">
@@ -49,28 +37,25 @@
         メールアドレスは正しい形式で入力してください。
       </div>
     </div>
-    <!-- 終了日が入力されているかををウオッチ -->
-    <!-- 本日以降の日付で入力されないといけない。 -->
+
   
     <div class="form-group">
       <label>開始日</label>
-        <input type="date" class="form-control" aria-label="開始日" v-model="$v.form.start_date.$model">
-      <div class="text-danger" v-if="$v.form.start_date.$error && !$v.form.start_date.required">
+        <input type="date" class="form-control" aria-label="開始日" v-model="$v.form.startDate.$model">
+      <div class="text-danger" v-if="$v.form.startDate.$error && !$v.form.startDate.required">
         開始日を入力してください。
       </div>
-      <div class="text-danger" v-if="$v.form.start_date.$error && !$v.form.start_date.minValue">
+      <div class="text-danger" v-if="$v.form.startDate.$error && !$v.form.startDate.minValue">
         開始日を終了日より前の日で入力してください。
       </div>
     </div>
 
-    <!-- 開始日が入力されているかをウオッチ。 -->
-    <!-- 本日以降の日付で入力されていないといけない。 -->
 
 
     <div class="form-group">
       <label>終了日</label>
-        <input type="date" class="form-control" aria-label="開始日" v-model="$v.form.end_date.$model">
-      <div class="text-danger" v-if="$v.form.end_date.$error && !$v.form.end_date.required">
+        <input type="date" class="form-control" aria-label="終了日" v-model="$v.form.endDate.$model">
+      <div class="text-danger" v-if="$v.form.endDate.$error && !$v.form.endDate.required">
         終了日を入力してください。
       </div>
       <div class="text-danger">
@@ -91,12 +76,11 @@
       </div>
     </div>
 
-    <!-- foodsでmultipleにするとコンソールでエラーがでる。-->
-
-    <!-- <div class="form-group">
+<!-- 
+    <div class="form-group">
       <label>好きな食べ物</label>
-      <select v-bind:multiple="isMultiple" class="form-control" aria-label="好きな食べ物" v-model="$v.form.foods.$model">
-        <option value="banana">りんご</option>
+      <select class="form-control" aria-label="好きな食べ物" v-model="$v.form.foods.$model" multiple>
+        <option value="apple">りんご</option>
         <option value="banana">バナナ</option>
         <option value="meron">メロン</option>
         <option value="ichigo">いちご</option>
@@ -106,12 +90,18 @@
       </div>
     </div> -->
 
-    <select class="form-control" aria-label="好きな食べ物" v-model="hobby" multiple>
-        <option value="banana">バスケ</option>
-        <option value="soccer">サッカー</option>
-        <option value="meron">野球</option>
-        <option value="ichigo">ダンス</option>
-    </select>
+
+    <div class="form-group">
+      <label>趣味</label>
+      <select class="form-control" aria-label="好きな趣味" v-model="$v.form.hobbies.$model" multiple>
+        <option value="soccer">サーカー</option>
+        <option value="baseboll">野球</option>
+        <option value="basket">バスケット</option>
+      </select>
+      <div class="text-danger" v-if="$v.form.hobbies.$error && !$v.form.hobbies.required">
+         好きな食べ物は選択してください。
+      </div>
+    </div>
 
     <div class="form-group">
       <label>本文</label>
@@ -146,34 +136,85 @@
 
 export default {
     props: {
-      value: {
-        type: Object,
-        required: true
+      propsTitle: {
+        // type: String,
+        // required: true
       },
-    },
-    filters: {
-      datefilter: function(date){
-        return moment(date).format('YYYY/MM/DD');
+      propsBody: {
+        // type: String,
+        // required: true
+      },
+      propsEmail: {
+        // type: String,
+        // required: true
+      },
+      propsStartDate: {
+        // type: Date,
+        // required: true
+      },
+      propsEndDate: {
+        // type: Date,
+        // required: true
+      },
+      propsHobbies: {
+        // type: Array,
+        // required: true
+      },
+      propsFoods: {
+        // type: Array,
+        // required: true
+      },
+      propsGender: {
+        // type: String,
+        // // required: true
+      },
+      propsSubject: {
+        // type: String,
+        // required: true
+      },
+      propsCheck: {
+        // type: Boolean,
+        // required: true
+      },
+      propsSubmitCheck: {
+        // type: Boolean,
+        // required: true
       }
+      // propsForm: {
+      //   type: Object,
+      //   required: true
+      // },
     },
+    // filters: {
+    //   datefilter: function(date){
+    //     return moment(date).format('YYYY/MM/DD');
+    //   }
+    // },
     data() {
       return {
         form: null,
-        isMultiple: true,
-        hobby: []
       }
     },
-    mounted() {
-      console.log(this.value)
-      this.form = {...this.value}
-      // this.form = this.value
+    created() {
+      this.form = {
+        title: this.propsTitle,
+        body: this.propsBody,
+        email: this.propsEmail,
+        startDate: this.propsStartDate,
+        endDate: this.propsEndDate,
+        hobbies: this.propsHobbies,
+        foods: this.propsFoods,
+        gender: this.propsGender,
+        subject: this.propsSubject,
+        check: this.propsCheck,
+        submitCheck: this.propsSubmitCheck
+      }
     },
     methods: {
       submit() {
         this.$v.$touch()
         if (this.$v.$invalid) {
           this.form.submitCheck = true; // 送信後に表示してほしいエラーにはこの判定を使う。
-          console.log("バリデーションエラー")
         } else {
           this.$emit("submit", this.$v);
         }
@@ -189,13 +230,10 @@ export default {
           required,
           email
         },
-        start_date: {
+        startDate: {
           required,
-          isDate: {
-            isDate: isDate(Date)
-          }
         },
-        end_date: {
+        endDate: {
           required,
         },
         body: {
@@ -204,6 +242,9 @@ export default {
         },
         foods: {
           required
+        },
+        hobbies: {
+          required,
         },
         gender: {required},
         subject: {required},
