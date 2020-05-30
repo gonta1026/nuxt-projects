@@ -5,17 +5,8 @@
     </h1>
     
     <form-contact
-    :propsTitle="form.title"
-    :propsBody="form.body"
-    :propsEmail="form.email"
-    :propsStartDate="form.startDate"
-    :propsEndDate="form.startDate"
-    :propsHobbies="form.hobbies"
-    :propsFoods="form.foods"
-    :propsGender="form.gender"
-    :propsSubject="form.subject"
-    :propsCheck="form.check"
-    :propsSubmitCheck="form.submitCheck"
+  
+    :propsForm="form"
     @submit="submit"/>
   </div>
 </template>
@@ -37,8 +28,8 @@
           endDate: "",
           hobbies: [],
           foods: [],
-          gender: null,
-          subject: null,
+          gender: "",
+          subject: "",
           check: false,
           submitCheck: false
         },

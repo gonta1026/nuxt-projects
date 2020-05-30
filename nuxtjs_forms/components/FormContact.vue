@@ -45,8 +45,11 @@
       <div class="text-danger" v-if="$v.form.startDate.$error && !$v.form.startDate.required">
         開始日を入力してください。
       </div>
-      <div class="text-danger" v-if="$v.form.startDate.$error && !$v.form.startDate.minValue">
+      <!-- <div class="text-danger" v-if="$v.form.startDate.$error && !$v.form.startDate.minValue">
         開始日を終了日より前の日で入力してください。
+      </div> -->
+      <div class="text-danger" v-if="$v.form.startDate.$error && !$v.form.startDate.afterToday">
+        開始日を明日以降の日付で入力。
       </div>
     </div>
 
@@ -58,9 +61,9 @@
       <div class="text-danger" v-if="$v.form.endDate.$error && !$v.form.endDate.required">
         終了日を入力してください。
       </div>
-      <div class="text-danger">
+      <!-- <div class="text-danger">
         終了日を開始日より前の日で入力してください。
-      </div>
+      </div> -->
     </div>
 
     <div class="form-group">
@@ -75,21 +78,6 @@
         部署を選択してください。
       </div>
     </div>
-
-<!-- 
-    <div class="form-group">
-      <label>好きな食べ物</label>
-      <select class="form-control" aria-label="好きな食べ物" v-model="$v.form.foods.$model" multiple>
-        <option value="apple">りんご</option>
-        <option value="banana">バナナ</option>
-        <option value="meron">メロン</option>
-        <option value="ichigo">いちご</option>
-      </select>
-      <div class="text-danger" v-if="$v.form.foods.$error">
-         好きな食べ物は選択してください。
-      </div>
-    </div> -->
-
 
     <div class="form-group">
       <label>趣味</label>
@@ -126,64 +114,19 @@
 
 <script>
 
-  import {maxLength, minLength, required, email} from "vuelidate/lib/validators"
-  import moment from "moment"
-  const is = param =>value => value === param;
-  // moment(new Date()).format('YYYY/MM/DD')
-  const isDate = (value) => {
-  return value === true
-}
+import {maxLength, minLength, required, email, minValue} from "vuelidate/lib/validators"
+import moment from "moment"
+const is = param => value => value === param;
+const afterToday = (today) => value => today < value;
+
 
 export default {
     props: {
-      propsTitle: {
-        // type: String,
-        // required: true
-      },
-      propsBody: {
-        // type: String,
-        // required: true
-      },
-      propsEmail: {
-        // type: String,
-        // required: true
-      },
-      propsStartDate: {
-        // type: Date,
-        // required: true
-      },
-      propsEndDate: {
-        // type: Date,
-        // required: true
-      },
-      propsHobbies: {
-        // type: Array,
-        // required: true
-      },
-      propsFoods: {
-        // type: Array,
-        // required: true
-      },
-      propsGender: {
-        // type: String,
-        // // required: true
-      },
-      propsSubject: {
-        // type: String,
-        // required: true
-      },
-      propsCheck: {
-        // type: Boolean,
-        // required: true
-      },
-      propsSubmitCheck: {
-        // type: Boolean,
-        // required: true
+      propsForm: {
+        type: Object,
+        required: true
       }
-      // propsForm: {
-      //   type: Object,
-      //   required: true
-      // },
+
     },
     // filters: {
     //   datefilter: function(date){
@@ -192,23 +135,11 @@ export default {
     // },
     data() {
       return {
-        form: null,
+        form: {},
       }
     },
     created() {
-      this.form = {
-        title: this.propsTitle,
-        body: this.propsBody,
-        email: this.propsEmail,
-        startDate: this.propsStartDate,
-        endDate: this.propsEndDate,
-        hobbies: this.propsHobbies,
-        foods: this.propsFoods,
-        gender: this.propsGender,
-        subject: this.propsSubject,
-        check: this.propsCheck,
-        submitCheck: this.propsSubmitCheck
-      }
+      this.form = this.propsForm;
     },
     methods: {
       submit() {
@@ -232,6 +163,7 @@ export default {
         },
         startDate: {
           required,
+          afterToday: afterToday(moment().format('YYYY-MM-DD'))
         },
         endDate: {
           required,
