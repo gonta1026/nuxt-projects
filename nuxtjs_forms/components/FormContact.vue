@@ -41,29 +41,22 @@
   
     <div class="form-group">
       <label>開始日</label>
-        <input type="date" class="form-control" aria-label="開始日" v-model="$v.form.startDate.$model">
+        <input type="date" class="form-control" aria-label="開始日" v-model="$v.form.startDate.$model" :min=tommorow>
       <div class="text-danger" v-if="$v.form.startDate.$error && !$v.form.startDate.required">
         開始日を入力してください。
       </div>
-      <!-- <div class="text-danger" v-if="$v.form.startDate.$error && !$v.form.startDate.minValue">
-        開始日を終了日より前の日で入力してください。
-      </div> -->
       <div class="text-danger" v-if="$v.form.startDate.$error && !$v.form.startDate.afterToday">
         開始日を明日以降の日付で入力。
       </div>
     </div>
 
 
-
-    <div class="form-group">
+    <div v-if="form.startDate" class="form-group">
       <label>終了日</label>
-        <input type="date" class="form-control" aria-label="終了日" v-model="$v.form.endDate.$model">
+        <input type="date" class="form-control" aria-label="終了日" v-model="$v.form.endDate.$model" :min="form.startDate">
       <div class="text-danger" v-if="$v.form.endDate.$error && !$v.form.endDate.required">
         終了日を入力してください。
       </div>
-      <!-- <div class="text-danger">
-        終了日を開始日より前の日で入力してください。
-      </div> -->
     </div>
 
     <div class="form-group">
@@ -126,16 +119,12 @@ export default {
         type: Object,
         required: true
       }
-
     },
-    // filters: {
-    //   datefilter: function(date){
-    //     return moment(date).format('YYYY/MM/DD');
-    //   }
-    // },
+
     data() {
       return {
         form: {},
+        tommorow: moment().add(1, 'days').format('YYYY-MM-DD')
       }
     },
     created() {
@@ -145,7 +134,7 @@ export default {
       submit() {
         this.$v.$touch()
         if (this.$v.$invalid) {
-          this.form.submitCheck = true; // 送信後に表示してほしいエラーにはこの判定を使う。
+          this.form.submitCheck = true;
         } else {
           this.$emit("submit", this.$v);
         }
