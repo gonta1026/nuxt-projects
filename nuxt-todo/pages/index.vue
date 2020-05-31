@@ -22,6 +22,7 @@
         @input="updateTodosName($event.target.value)">
         <button>Add</button>
       </form>
+      
     </div>
   </div>
 </template>
@@ -30,7 +31,7 @@
 
 <script>
 import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
-
+console.log(process.env.HOGE)
   import moment from 'moment'
   export default {
     created: function() {
