@@ -20,7 +20,7 @@ export const mutations = {
   },
   add(state, name) {
     state.name = "";
-    this.dispatch('todos/addAction', name)
+    this.dispatch('todos/add', name)
   },
 }
 
@@ -28,7 +28,7 @@ export const actions = {
   init: firestoreAction(({ bindFirestoreRef }) => {
     bindFirestoreRef('todos', todosRef)
   }),
-  addAction: firestoreAction((_, name) => {
+  add: firestoreAction((_, name) => {
     if(name.trim()) {
       todosRef.add({
         name: name,

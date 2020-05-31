@@ -1,9 +1,8 @@
 <template>
-  <div>
-    <ul>
+  <div class="container">
+    <ul class="todos">
       <li v-for="todo in orderdTodos" :key="todo.id">
         <span v-if="todo.created">
-          <p>{{todo.id}}</p>
           <input
           type="checkbox"
           :checked="todo.done"
@@ -22,7 +21,6 @@
         @input="updateTodosName($event.target.value)">
         <button>Add</button>
       </form>
-      
     </div>
   </div>
 </template>
@@ -41,7 +39,7 @@ console.log(process.env.HOGE)
       ...mapState('todos',[
         "name",
       ]),
-      ...mapGetters("todos",["orderdTodos"])
+      ...mapGetters('todos',["orderdTodos"])
     },
     methods: {
       ...mapMutations('todos', ["updateTodosName", "add"]),
@@ -56,6 +54,17 @@ console.log(process.env.HOGE)
 </script>
 
 <style>
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.todos {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
 li > span > span.done {
   text-decoration: line-through;
 }
