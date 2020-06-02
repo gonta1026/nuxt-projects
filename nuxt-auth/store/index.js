@@ -1,18 +1,24 @@
 import firebase from '~/plugins/firebase'
 const db = firebase.firestore();
 const todoRef = db.collection('todos');
+
 export const state = () => ({
-  userUid: '',
-  userName: '',
+  user: {
+    userUid: '',
+    userName: ''
+  },
   todos: [],
 })
 
+export const getters = {
+  loginUser: state => state.user,
+  getTodos: state => state.todos
+}
+
 export const mutations = {
-  setUserUid(state, userUid) {
-    state.userUid = userUid 
-  },
-  setUserName(state, userName) {
-    state.userName = userName
+  setUser(state, user) {
+    state.user.userUid = user.id 
+    state.user.userName = user.displayName 
   },
   addTodo(state, todo) {
     state.todos.push(todo)
@@ -28,51 +34,39 @@ export const actions = {
     .then(function (result) {
       const user = result.user;
       console.log('success : ' + user.uid + ' : ' + user.displayName)
-      commit('setUserUid', user.uid) +
-      commit('setUserName', user.displayName)
+      commit('setUser', user.uid)
     }).catch(function (error) {
       var errorCode = error.code;
       console.log('error : ' + errorCode)
     });
   },
-  init({commit}, user) {
+  initTodos({commit}, user) {
     todoRef.get()
     .then(res => {
       res.forEach((doc) => {
         console.log('success : ' + `${doc.id} => ${doc.data()}`);
         commit('addTodo', doc.data())
-        commit('setUserUid', user.id)
-        commit('setUserName', user.displayName)
       })
     })
     .catch(error => {
       console.log('error : ' + error)
     })
   },
+  initUser({commit}, user){
+    commit('setUser', user);
+  },
   addTodo({commit}, todo) {
-   console.log(todo)
-    todoRef
-    .add({
+    todoRef.add({
       todo: todo.todo,
       limit: todo.limit,
+      created: firebase.firestore.FieldValue.serverTimestamp()
     })
-   .then(function(docRef) {
+    .then(function(docRef) {
       console.log("Document written with ID: ", docRef.id);
       commit('addTodo', todo)
     })
     .catch(function(error) {
       console.error("Error adding document: ", error);
     });
-  }
-}
-export const getters = {
-  getUserUid(state) {
-    return state.userUid
-  },
-  getUserName(state) {
-    return state.userName
-  },
-  getTodos(state) {
-    return state.todos
   }
 }
