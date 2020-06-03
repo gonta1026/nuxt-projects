@@ -1,27 +1,34 @@
 <template>
   <div class="container">
-    <p class="title is-1 is-spaced">user: {{ loginUser.userName }}</p>
+    <div class="title is-1 is-spaced" v-if="loginUser.userName">
+      <p>user: {{ loginUser.userName }}</p>
+    </div>
     <button class="button is-primary is-rounded" @click="login">
       ログイン
     </button>
+    <button class="button is-primary is-rounded" @click="logout">
+      ログアウト
+    </button>
 
-    <table class="table is-narrow">
+    <table class="table is-narrow" v-if="orderdTodos.length">
       <tbody>
         <tr>
-          <th>id</th>
           <th>todo</th>
           <th>limit</th>
+          <th>作成時間</th>
+          <th>削除ボタン</th>
         </tr>
       </tbody>
       <tbody>
-        <tr v-for="todo in $store.getters.getTodos" :key="todo.id">
-          <td>{{todo.id}}</td>
+        <tr v-for="todo in orderdTodos" :key="todo.id">
           <td>{{todo.todo}}</td>
           <td>{{todo.limit}}</td>
+          <td v-if="todo.created">{{ todo.created.toDate() | dateFilter }}</td>
+          <td v-if="todo.userUid === loginUser.userUid" @click="removeTodo(todo.id)">削除</td>
         </tr>
       </tbody>
     </table>
-    <div class="field is-grouped">
+    <div class="field is-grouped" v-if="loginUser.userName">
       <p class="control is-expanded">
         <input v-model="todo.newTodo" class="input" type="text" placeholder="todo">
       </p>
@@ -40,7 +47,7 @@
 <script>
 import firebase from '~/plugins/firebase'
 import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
-
+import moment from "moment";
 export default {
   data: () => ({
     todo: {
@@ -48,30 +55,33 @@ export default {
       newLimit: ''
     }
   }),
+  created() {
+    this.$store.dispatch('todos/initTodos');
+    firebase.auth().onAuthStateChanged((user)=> {
+      if (user) {
+        // ログインしたときに実行するメソッド
+        this.$store.dispatch('todos/initUser', user);
+      }
+    })
+  },
   computed: {
-    ...mapGetters(["loginUser"]),  
+    ...mapGetters("todos", ["loginUser", "orderdTodos"]),  
   },
   methods: {
-    ...mapActions(["addTodo"]),
+    ...mapActions("todos",["addTodo", "removeTodo", "logout"]),
     login() {
-      console.log('login')
-      this.$store.dispatch('login')
+      this.$store.dispatch('todos/login')
     },
     addTodo() {
       const todo = this.todo.newTodo
       const limit = this.todo.newLimit
-      this.$store.dispatch('addTodo', {todo, limit})
+      const userUid = this.loginUser.userUid
+      this.$store.dispatch('todos/addTodo', {todo, limit, userUid})
       this.todo.newLimit = this.todo.newTodo = '';
     }
   },
-  created() {
-    this.$store.dispatch('initTodos');
-    firebase.auth().onAuthStateChanged((user)=> {
-      if (user) {
-        // ログインしたときに実行するメソッド
-        this.$store.dispatch('initUser', user);
-      }
-    })
+  filters: {
+    dateFilter: date => moment(date).format('YYYY/MM/DD')
   }
 }
 </script>
