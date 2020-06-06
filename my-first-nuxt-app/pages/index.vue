@@ -22,16 +22,17 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
-  head(){
-    return {
-      title: "トップページ"
+  async asyncData({ store }) {
+    if (store.getters['items'].length) {//既に取得している場合はreturn
+      return;
     }
+    await store.dispatch('fetchItems');
   },
-  async asyncData({ app }) {
-    const items = await app.$axios.$get("https://qiita.com/api/v2/items?query=tag:vue.js")
-    return { items }
-  },
+  computed: {
+    ...mapGetters(['items'])
+  }
 };
 </script>
 

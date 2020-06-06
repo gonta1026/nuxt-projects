@@ -1,4 +1,3 @@
-
 <template>
   <section class="container">
     <div>
@@ -25,19 +24,33 @@
 </template>
 
 <script>
-// import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 export default {
-  head(){
+  head() {
     return {
       title: this.user.id
     }
   },
-  async asyncData({ route, app }) {
-    const user = await app.$axios.$get(`https://qiita.com/api/v2/users/${route.params.id}`)
-    const items = await app.$axios.$get(`https://qiita.com/api/v2/items?query=user:${route.params.id}`)
-    return {user, items}
+  async asyncData({ route, store, redirect }) {
+    if (store.getters['users'][route.params.id]) {//既に取得している場合はreturn
+      return;
+    }
+    try {
+      await store.dispatch('fetchUserInfo', { id: route.params.id });
+    } catch (e) {
+      redirect('/');
+    }
   },
-
+  computed: {
+    user() {
+      // console.log(this.$route.params.id)
+      return this.users[this.$route.params.id];
+    },
+    items() {
+      return this.userItems[this.$route.params.id] || [];
+    },
+    ...mapGetters(['users', 'userItems'])
+  }
 };
 </script>
 

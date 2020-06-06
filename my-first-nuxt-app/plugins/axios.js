@@ -1,4 +1,3 @@
-console.log(process.env.QIITA_TOKEN)
 export default function ({ $axios }) {
   $axios.onRequest((config) => {
     if (process.env.QIITA_TOKEN) {
