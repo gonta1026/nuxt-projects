@@ -24,10 +24,16 @@ export default {
   */
   css: [
   ],
+  router: {
+    middleware: [
+      // "auth"
+    ]
+  },
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
+      "~/plugins/logger"
   ],
   /*
   ** Nuxt.js dev-modules
