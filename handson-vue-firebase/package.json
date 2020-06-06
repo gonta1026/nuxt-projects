@@ -1,0 +1,32 @@
+{
+  "name": "handson-vue-firebase",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "format": "prettier './src/**/*.{js,vue}' --write"
+  },
+  "dependencies": {
+    "firebase": "^5.5.4",
+    "material-icons": "^0.2.3",
+    "vue": "^2.5.17",
+    "vue-router": "^3.0.1",
+    "vue-router-layout": "^0.1.2",
+    "vuesax": "^3.5.1",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.0.5",
+    "@vue/cli-service": "^3.0.5",
+    "firebase-tools": "^5.1.1",
+    "prettier": "^1.14.3",
+    "vue-auto-routing": "^0.3.0",
+    "vue-cli-plugin-auto-routing": "^0.2.1",
+    "vue-template-compiler": "^2.5.17"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  }
+}
