@@ -3,5 +3,7 @@ export default ({ app }) => {
     console.log(`[ROUTER] move to '${to.fullPath}'`)
     next()
   })
+
+
 }
 
