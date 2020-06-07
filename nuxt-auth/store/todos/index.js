@@ -14,36 +14,52 @@ export const state = () => ({
 
 export const getters = {
   loginUser: state => state.user,
-  orderdTodos: state => _.sortBy(state.todos, "created")
+  orderdTodos: state => state.todos
 }
 
 export const mutations = {
   setUser(state, user) {
     state.user.userUid = user.uid
     state.user.userName = user.displayName
-    console.log
   },
   logout(state){
     state.user.userUid = ""
     state.user.userName = ""
-  }
+  },
+  logout(state){
+    state.user.userUid = ""
+    state.user.userName = ""
+  },
+  // setTodos(state, todos){
+  //   state.todos = todos
+  // }
 }
-
 export const actions = {
+  // async initTodos({ commit }){
+  //   firestoreAction(({ bindFirestoreRef }) => {
+  //     bindFirestoreRef('todos', todosRef)
+  //   })
+  //   // const todos = [];
+  //   // const result = await todosRef.get();
+  //   // result.forEach((doc) => {
+  //   //   todos.push(doc.data());
+  //   // });
+  //   // const sortTodo = _.sortBy(todos, "created");
+  //   // commit('setTodos', sortTodo)
+  // },
   initTodos: firestoreAction(({ bindFirestoreRef }) => {
-  　bindFirestoreRef('todos', todosRef)
+    bindFirestoreRef('todos', todosRef)
   }),
-  login({ commit }) {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-    firebase.auth().signInWithPopup(provider)
-    .then(function (result) {
-      const user = result.user;
-        commit('setUser', user)
-      }).catch(function (error) {
-        const errorCode = error.code;
-        console.log('error : ' + errorCode)
-      });
+  async login({ commit }) {
+    try {
+      // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+      const provider = new firebase.auth.GoogleAuthProvider();
+      const result = await firebase.auth().signInWithPopup(provider)
+      commit('setUser', result.user)
+    } catch {
+      const errorCode = error.code;
+      console.log('error : ' + errorCode)
+    }
   },
   logout({commit}) {
     firebase.auth().signOut();
@@ -53,11 +69,11 @@ export const actions = {
     commit('setUser', user);
   },
   addTodo: firestoreAction((_, todo) => {
-    console.log(todo)
     todosRef.add({
       todo: todo.todo,
       limit: todo.limit,
       userUid: todo.userUid,
+      userName: todo.userName,
       created: firebase.firestore.FieldValue.serverTimestamp()
     })
   }),

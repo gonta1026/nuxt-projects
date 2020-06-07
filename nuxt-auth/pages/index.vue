@@ -15,6 +15,7 @@
         <tr>
           <th>todo</th>
           <th>limit</th>
+          <th>ユーザー名</th>
           <th>作成時間</th>
           <th>削除ボタン</th>
         </tr>
@@ -23,8 +24,9 @@
         <tr v-for="todo in orderdTodos" :key="todo.id">
           <td>{{todo.todo}}</td>
           <td>{{todo.limit}}</td>
-          <td v-if="todo.created">{{ todo.created.toDate() | dateFilter }}</td>
-          <td v-if="todo.userUid === loginUser.userUid" @click="removeTodo(todo.id)">削除</td>
+          <td v-if="todo.userName">{{ todo.userName }}</td>
+          <td v-if="todo.created">{{ todo.created.toDate() | dateFilter}}</td>
+          <td @click="removeTodo(todo.id)">削除</td>
         </tr>
       </tbody>
     </table>
@@ -55,28 +57,32 @@ export default {
       newLimit: ''
     }
   }),
+  //todosメモ　できればasyncDataを使って初期表示も早くしたいがfirestoreActionを使ってバインドしている場合は使えないと思われる。
   created() {
-    this.$store.dispatch('todos/initTodos');
-    firebase.auth().onAuthStateChanged((user)=> {
-      if (user) {
-        // ログインしたときに実行するメソッド
-        this.$store.dispatch('todos/initUser', user);
-      }
-    })
+    // if (this.todos){
+      this.$store.dispatch('todos/initTodos');    
+      firebase.auth().onAuthStateChanged((user)=> {
+        if (user) {
+          // ログインしたときに実行するメソッド
+          this.$store.dispatch('todos/initUser', user);
+        }
+      })
+    // }
   },
   computed: {
     ...mapGetters("todos", ["loginUser", "orderdTodos"]),  
   },
   methods: {
     ...mapActions("todos",["addTodo", "removeTodo", "logout"]),
-    login() {
-      this.$store.dispatch('todos/login')
+    async login() {
+      await this.$store.dispatch('todos/login')
     },
     addTodo() {
       const todo = this.todo.newTodo
       const limit = this.todo.newLimit
       const userUid = this.loginUser.userUid
-      this.$store.dispatch('todos/addTodo', {todo, limit, userUid})
+      const userName = this.loginUser.userName
+      this.$store.dispatch('todos/addTodo', {todo, limit, userUid, userName})
       this.todo.newLimit = this.todo.newTodo = '';
     }
   },
