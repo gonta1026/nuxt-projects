@@ -4,12 +4,15 @@
       <p>user: {{ loginUser.userName }}</p>
     </div>
     <button class="button is-primary is-rounded" @click="login">
-      ログイン
+      googleアカウントでログイン
     </button>
     <button class="button is-primary is-rounded" @click="logout">
-      ログアウト
+      googleアカウントをログアウト
     </button>
-
+    <p>emailとpasswordでログインする。</p>
+    <input type="email" namm="email" v-model="email">
+    <input type="password" namm="password" v-model="password">
+    <button @click"signup"></button>
     <table class="table is-narrow" v-if="orderdTodos.length">
       <tbody>
         <tr>
@@ -55,7 +58,9 @@ export default {
     todo: {
       newTodo: '',
       newLimit: ''
-    }
+    },
+    email: "",
+    password: ""
   }),
   //todosメモ　できればasyncDataを使って初期表示も早くしたいがfirestoreActionを使ってバインドしている場合は使えないと思われる。
   created() {
@@ -103,3 +108,4 @@ export default {
   flex-direction: column;
 }
 </style>
+
