@@ -1,0 +1,20 @@
+a {
+  text-decoration: none;
+  color: #ddd;
+}
+
+header .v-toolbar__title a {
+  color: #fff;
+}
+
+.v-list-item__content a {
+  color: rgba(0, 0, 0, 0.87);
+}
+
+div .v-application--is-ltr .v-list-item__action:first-child {
+  margin-right: 18px;
+}
+
+.v-application a {
+  color: rgba(0, 0, 0, 0.87);
+}

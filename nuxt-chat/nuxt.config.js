@@ -25,11 +25,13 @@ export default {
   ** Global CSS
   */
   css: [
+    '~/assets/scss/setting.scss'
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~plugins/ui',
   ],
   /*
   ** Nuxt.js dev-modules
