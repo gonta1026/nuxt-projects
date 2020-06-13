@@ -3,12 +3,21 @@ a {
   color: #ddd;
 }
 
+li,
+ol {
+  list-style: none;
+}
+
 header .v-toolbar__title a {
   color: #fff;
 }
 
 .v-list-item__content a {
   color: rgba(0, 0, 0, 0.87);
+}
+
+.v-content__wrap .container {
+  padding: 16px;
 }
 
 div .v-application--is-ltr .v-list-item__action:first-child {

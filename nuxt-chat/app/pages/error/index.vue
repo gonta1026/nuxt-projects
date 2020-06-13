@@ -4,3 +4,13 @@
     <p>ここはエラーページですよ</p>
   </div>
 </template>
+
+<script>
+export default {
+  head: {
+    bodyAttrs: {
+      class: 'error-page'
+    }
+  }
+}
+</script>

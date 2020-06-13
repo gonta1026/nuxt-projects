@@ -1,12 +1,16 @@
 import Vue from 'vue'
 
 
-import Header from '~/components/Layout/Header'
-import Footer from '~/components/Layout/Footer'
+import PageHeader from '~/components/Layout/PageHeader'
+import HeaderBar from '~/components/modules/HeaderBar'
+import NavigationDrawer from '~/components/modules/NavigationDrawer'
 Vue.mixin({
   components: {
-    Header,
-    Footer
+    //modules
+    PageHeader,
+    HeaderBar,
+    NavigationDrawer
+    // atoms
   },
 })
 
