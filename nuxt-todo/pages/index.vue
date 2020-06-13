@@ -29,7 +29,6 @@
 
 <script>
 import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
-console.log(process.env.HOGE)
   import moment from 'moment'
   export default {
     created: function() {

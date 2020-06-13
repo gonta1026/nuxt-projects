@@ -46,6 +46,7 @@ export default {
   */
   plugins: [
     '~plugins/ui',
+    '~plugins/firebase',
   ],
   /*
   ** Nuxt.js dev-modules
@@ -57,6 +58,12 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    [
+      '@nuxtjs/dotenv',
+      {
+        filename: process.env.NODE_ENV !== 'production' ? "../config/.env.dev" : "../config/.env.prod"
+      }
+    ]
   ],
   /*
   ** vuetify module configuration
