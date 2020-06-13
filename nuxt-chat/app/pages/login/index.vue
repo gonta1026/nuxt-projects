@@ -55,6 +55,11 @@
 
 <script>
   export default {
+    head: {
+      bodyAttrs: {
+        class: 'login'
+      }
+    },
     props: {
       source: String,
     },

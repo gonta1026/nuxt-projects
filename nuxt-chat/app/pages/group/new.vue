@@ -74,6 +74,11 @@
 
 <script>
   export default {
+    head: {
+      bodyAttrs: {
+        class: 'group-new'
+      }
+    },
     props: {
       source: String,
     },

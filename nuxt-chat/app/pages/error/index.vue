@@ -9,7 +9,7 @@
 export default {
   head: {
     bodyAttrs: {
-      class: 'error-page'
+      class: 'error'
     }
   }
 }

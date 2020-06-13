@@ -1,5 +1,4 @@
 import firebase from 'firebase'
-console.log(process.env.FIREBASE_PROJECT_ID);
 // パラメータの準備（今回はこれだけfirebaseで使う機能が増えるとまたパラメーターを増やす）
 const config = {
   apiKey: `AIzaSyBhPz3TNNIgGLRaR4zZuER-bGhOcbpp_VA`,

@@ -1,6 +1,7 @@
 <template>
   <v-app id="inspire">
-    <Header />
+    <HeaderBar />
+    <NavigationDrawer />    
     <v-content>
       <v-container
       >
@@ -21,7 +22,7 @@
 export default {
   head: {
     bodyAttrs: {
-      class: 'error-page'
+      class: 'group'
     }
   },
   data: () => ({

@@ -24,12 +24,22 @@
                 <v-spacer></v-spacer>
               </v-toolbar>
               <v-card-text>
-                <v-form>
+                <v-form @submit.prevent="signUp(user)">
+                  <v-text-field
+                    label="Name"
+                    name="name"
+                    prepend-icon="mdi-account"
+                    type="text"
+                    v-model="user.name"
+                  ></v-text-field>
+                  
                   <v-text-field
                     label="Email"
                     name="email"
-                    prepend-icon="mdi-account"
+                    color="teal darken-2"
+                    prepend-icon="mdi-email"
                     type="text"
+                    v-model="user.email"
                   ></v-text-field>
 
                   <v-text-field
@@ -38,13 +48,11 @@
                     name="password"
                     prepend-icon="mdi-lock"
                     type="password"
+                    v-model="user.password"
                   ></v-text-field>
+                  <v-btn type="submit" color="primary">Sign up</v-btn>
                 </v-form>
               </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="primary">Sign up</v-btn>
-              </v-card-actions>
             </v-card>
           </v-col>
         </v-row>
@@ -54,9 +62,46 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      source: String,
+
+import firebase from '~/plugins/firebase'
+import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
+
+export default {
+  head: {
+    bodyAttrs: {
+      class: 'signup'
+    }
+  },
+  props: {
+    source: String,
+  },
+  data: () => ({
+    user: {
+      name: "",
+      email: "",
+      password: "",
+    }
+  }),
+  created() {
+  // if (this.todos){
+    this.$store.dispatch('chat/initUsers');    
+    // firebase.auth().onAuthStateChanged((user)=> {
+    //   if (user) {
+    //     // ログインしたときに実行するメソッド
+    //     this.$store.dispatch('todos/initUser', user);
+    //   }
+    // })
+    // }
+  },
+  computed: {
+    ...mapState("chat", ["users"])
+  },
+  methods: {
+    signUp(user){
+      const {name, email, password} = user;
+      this.$store.dispatch('chat/signUp', {name, email, password})
+      this.user.name = this.user.email = this.user.password = '';
     },
   }
+}
 </script>
