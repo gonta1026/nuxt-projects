@@ -23,7 +23,12 @@
 export default {
   methods: {
     logout(){
-      this.$store.dispatch("chat/logout")
+      try {
+        this.$store.dispatch("chat/logout")
+        this.$router.push('/login')
+      }catch {
+        console.log("ログアウトに失敗しました")
+      }
     },
     change(){
       this.$emit("changeDrawer");

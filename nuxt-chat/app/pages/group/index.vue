@@ -10,7 +10,9 @@
   </v-app>
 </template>
 
+
 <script>
+import firebase from '~/plugins/firebase'
 export default {
   head: {
     bodyAttrs: {
@@ -20,6 +22,14 @@ export default {
   data: () => ({
     drawer: null,
   }),
+  created() {
+    firebase.auth().onAuthStateChanged((user)=> {
+      if (user) {
+        console.log("ログインしているよ！")
+        this.$store.dispatch("chat/setCurrentUser", user);
+      }
+    })
+  }
 }
 </script>
 

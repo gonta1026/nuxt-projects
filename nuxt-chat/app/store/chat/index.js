@@ -7,8 +7,19 @@ const usersRef = db.collection('users')
 var user = firebase.auth().currentUser;
 // stateを定義
 export const state = () => ({
-  users: []
+  users: [],
+  currentUser: {
+    name: "",
+    email: ""
+  }
 })
+export const mutations = {
+  setCurrentUser(state, user) {
+    // state.currentUser.name = user.displayName
+    state.currentUser.email = user.email
+    // state.currentUser = user
+  },
+}
 
 export const actions = {
   initUsers: firestoreAction(({ bindFirestoreRef }) => {
@@ -26,19 +37,16 @@ export const actions = {
       console.log("新規登録に失敗しました！");
     }
   }),
-  login: firestoreAction((_, user) => {
-    try {
-      firebase.auth().signInWithEmailAndPassword(user.email, user.password)
-    } catch {
-      console.log("新規登録に失敗しました！");
-    }
-  }),
-  logout: firestoreAction(() => {
-    try {
-      firebase.auth().signOut()
-      console.log("ログアウト成功！")
-    } catch {
-      console.log("ログアウトに失敗しました！");
-    }
-  })
+  async login({commit}, user){
+    const result = await firebase.auth().signInWithEmailAndPassword(user.email, user.password);
+    console.log(result.user.uid);
+    commit('setCurrentUser', result.user)
+  },
+  async logout() {
+    await firebase.auth().signOut()
+  },
+  setCurrentUser({commit}, user){
+    commit("setCurrentUser", user)
+  }
+  
 }

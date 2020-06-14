@@ -57,27 +57,31 @@
 // import firebase from '~/plugins/firebase'
 import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
 
-  export default {
-    head: {
-      bodyAttrs: {
-        class: 'login'
-      }
-    },
-    data: () => ({
-      user: {
-        email: "",
-        password: "",
-      }
-    }),
-    computed: {
-    },
-    methods: {
-      login(user){
-        const {email, password} = user;
+export default {
+  head: {
+    bodyAttrs: {
+      class: 'login'
+    }
+  },
+  data: () => ({
+    user: {
+      email: "",
+      password: "",
+    }
+  }),
+  computed: {
+  },
+  methods: {
+    login(user){
+      const {email, password} = user;
+      try {
         this.$store.dispatch('chat/login', {email, password})
         this.user.email = this.user.password = '';
         this.$router.push('/group')
-      },
-    }
+      } catch {
+        console.log("ログインに失敗しました！")
+      }
+    },
   }
+}
 </script>

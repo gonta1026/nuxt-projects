@@ -1,5 +1,7 @@
 import firebase from 'firebase'
 // パラメータの準備（今回はこれだけfirebaseで使う機能が増えるとまたパラメーターを増やす）
+// var user = firebase.auth().currentUser;
+// console.log(firebase.auth().currentUser);
 const config = {
   apiKey: `AIzaSyBhPz3TNNIgGLRaR4zZuER-bGhOcbpp_VA`,
   authDomain: `${process.env.FIREBASE_PROJECT_ID}.firebaseapp.com`,
@@ -12,7 +14,8 @@ const config = {
 
 // 2重に初期化が行われないようにする
 if (!firebase.apps.length) {
-  firebase.initializeApp(config)
+  firebase.initializeApp(config);
+  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 }
 
 export default firebase
