@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer
-    v-model="drawer"
+    v-model="propsDrawer"
     app
   >
     <v-list dense>
@@ -24,9 +24,9 @@
 </template>
 <script>
 export default {
-data: () => ({
-    drawer: null,
-  })
+  props: {
+    propsDrawer: Boolean
+  }
 }
 </script>
 

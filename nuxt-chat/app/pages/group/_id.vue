@@ -1,7 +1,6 @@
 <template>
   <div>
-    <HeaderBar />    
-    <NavigationDrawer />    
+    <PageHeader />
     <v-content>
       <v-container
       >
@@ -112,7 +111,7 @@ export default {
     }
   },
   data: () => ({
-      drawer: null,
+      // drawer: null,
     }),
   }
 </script>

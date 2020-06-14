@@ -5,9 +5,9 @@
     color="indigo"
     dark
   >
-    <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+    <v-app-bar-nav-icon @click.stop="change"></v-app-bar-nav-icon>
     <v-toolbar-title class="toolbar">
-      <nuxt-link to="/group/">ChatApp</nuxt-link>
+      <nuxt-link to="/group/">野球部</nuxt-link>
       <v-avatar>
         <img
           src="https://cdn.vuetifyjs.com/images/john.jpg"
@@ -20,9 +20,11 @@
 
 <script>
 export default {
-data: () => ({
-    drawer: null,
-  }),  
+  methods: {
+    change(){
+      this.$emit("changeDrawer");
+    }
+  }
 }
 </script>
 
