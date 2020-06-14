@@ -72,9 +72,6 @@ export default {
       class: 'signup'
     }
   },
-  props: {
-    source: String,
-  },
   data: () => ({
     user: {
       name: "",
@@ -98,9 +95,14 @@ export default {
   },
   methods: {
     signUp(user){
-      const {name, email, password} = user;
-      this.$store.dispatch('chat/signUp', {name, email, password})
-      this.user.name = this.user.email = this.user.password = '';
+      try {
+        const {name, email, password} = user;
+        this.$store.dispatch('chat/signUp', {name, email, password})
+        this.user.name = this.user.email = this.user.password = '';
+        this.$router.push('/login')
+      } catch {
+        console.log("新規登録に失敗しました！");
+      }
     },
   }
 }

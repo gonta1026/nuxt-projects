@@ -1,24 +1,29 @@
 <template>
   <header class="header">
     <HeaderBar
-      @changeDrawer="drawer = !drawer"
+      @changeDrawer="changeState"
     />
+    <p>{{drawer}}</p>
     <NavigationDrawer 
       :props-drawer="drawer"
     />
+    
   </header>
 </template>
 
 <script>
 export default {
-  data: () => ({
-    drawer: true,
-  }),
+  data: function() {
+    return { 
+      drawer: true
+    }
+  },
   methods: {
     changeState(){
       this.drawer = !this.drawer;
+      console.log(this.drawer)
     }
-  }
+  },
 }
 </script>
 

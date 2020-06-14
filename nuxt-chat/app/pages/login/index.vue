@@ -24,12 +24,14 @@
                 <v-spacer></v-spacer>
               </v-toolbar>
               <v-card-text>
-                <v-form>
-                  <v-text-field
-                    label="Login"
-                    name="login"
-                    prepend-icon="mdi-account"
+                <v-form @submit.prevent="login(user)">
+　　　　　　　　　　　<v-text-field
+                    label="Email"
+                    name="email"
+                    color="teal darken-2"
+                    prepend-icon="mdi-email"
                     type="text"
+                    v-model="user.email"
                   ></v-text-field>
 
                   <v-text-field
@@ -38,13 +40,11 @@
                     name="password"
                     prepend-icon="mdi-lock"
                     type="password"
+                    v-model="user.password"
                   ></v-text-field>
+                  <v-btn type="submit" color="primary">Login</v-btn>
                 </v-form>
               </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="primary">Login</v-btn>
-              </v-card-actions>
             </v-card>
           </v-col>
         </v-row>
@@ -54,14 +54,30 @@
 </template>
 
 <script>
+// import firebase from '~/plugins/firebase'
+import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
+
   export default {
     head: {
       bodyAttrs: {
         class: 'login'
       }
     },
-    props: {
-      source: String,
+    data: () => ({
+      user: {
+        email: "",
+        password: "",
+      }
+    }),
+    computed: {
     },
+    methods: {
+      login(user){
+        const {email, password} = user;
+        this.$store.dispatch('chat/login', {email, password})
+        this.user.email = this.user.password = '';
+        this.$router.push('/group')
+      },
+    }
   }
 </script>
