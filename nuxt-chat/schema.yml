@@ -1,0 +1,17 @@
+# ?はnullでもいいことを表している。
+
+users:
+  documentID: auto
+    name: String
+    email: String
+    avatorURL: String?
+    groupId: map
+
+groups:
+  documentID: auto
+  name: String
+  description: String
+  userId: map
+  messages: subCollection
+    documentID: auto
+      message: String
