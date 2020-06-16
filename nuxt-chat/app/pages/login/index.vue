@@ -42,6 +42,7 @@
                     type="password"
                     v-model="user.password"
                   ></v-text-field>
+                  <nuxt-link to="/group">グループにとぶ</nuxt-link>
                   <v-btn type="submit" color="primary">Login</v-btn>
                 </v-form>
               </v-card-text>

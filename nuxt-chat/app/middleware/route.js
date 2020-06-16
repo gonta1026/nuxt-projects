@@ -1,16 +1,27 @@
 import firebase from "~/plugins/firebase";
+export default ({ req, route, redirect, store }) => {
+  // console.log("store.state")
+  firebase.auth().onAuthStateChanged(function (user) {
+    // store.dispatch("chat/setCurrentUser", user);
+    
+    if (user && route.path === "/login" || user && route.path === "/signup") {
+      return redirect("/group");
+    }
 
-export default ({ req, route, redirect }) => {
-  const currentUser = firebase.auth().currentUser;
+    /* ログインしていないのに "ログインと新規登録" 以外のページに行ったらloginページに戻す*/
+    if (!user && route.path !== "/login" || !user && route.path !== "/signup") {
+      return redirect("/login");
+    }
+  });
+
   if (['/'].includes(route.path)) {//ルートで来た際は処理をスキップ
     return redirect('/group')
   }
-  //todo ここでリダイレクトの指示を出してもうまくリダイレクトされない。
-  /* ログインしているのに "/login" のパスを使ったらルートに戻す*/
+  // //todo ここでリダイレクトの指示を出してもうまくリダイレクトされない？
+  // /* ログインしているのに "/login" のパスを使ったらルートに戻す*/
   // if (currentUser && route.path === "/login") {
   //   return redirect("/");
   // }
-  // /* ログインしていないのに "/login" 以外のページに行ったらloginページに戻す*/
   // if (!currentUser && route.path !== "/login") {
   //   return redirect("/login");
   // }

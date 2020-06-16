@@ -20,13 +20,13 @@ export default {
     ]
   },
   router: {
-    extendRoutes(routes, resolve) {
-      routes.push({
-        name: 'notFound',
-        path: '*',
-        component: resolve(__dirname, 'app/pages/error/index.vue')//関係のないページに移動しようとした際はloginのページに遷移させる。
-      })
-    },
+    // extendRoutes(routes, resolve) {
+    //   routes.push({
+    //     name: 'notFound',
+    //     path: '*',
+    //     component: resolve(__dirname, 'app/pages/error/index.vue')//関係のないページに移動しようとした際はloginのページに遷移させる。
+    //   })
+    // },
     middleware: [
       "route"
     ]

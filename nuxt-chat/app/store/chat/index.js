@@ -4,12 +4,12 @@ import { firestoreAction } from 'vuexfire'
 // データベースの定義
 const db = firebase.firestore()
 const usersRef = db.collection('users')
-var user = firebase.auth().currentUser;
+// var user = firebase.auth().currentUser;
 // stateを定義
 export const state = () => ({
   users: [],
   currentUser: {
-    name: "",
+    // name: "",
     email: ""
   }
 })
@@ -39,7 +39,6 @@ export const actions = {
   }),
   async login({commit}, user){
     const result = await firebase.auth().signInWithEmailAndPassword(user.email, user.password);
-    console.log(result.user.uid);
     commit('setCurrentUser', result.user)
   },
   async logout() {

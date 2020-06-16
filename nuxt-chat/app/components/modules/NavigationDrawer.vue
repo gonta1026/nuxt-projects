@@ -14,11 +14,13 @@
           </v-list-item-content>
         </nuxt-link>
       </v-list-item>
-      <v-list-item link>
-        <v-list-item-content>
-          <v-list-item-title>Contact</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+      <nuxt-link to="/group/1">
+        <v-list-item>
+          <v-list-item-content>
+              <v-list-item-title>Contact</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </nuxt-link>
     </v-list>
   </v-navigation-drawer>
   
