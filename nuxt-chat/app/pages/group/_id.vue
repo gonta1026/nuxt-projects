@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div>
+      <ModalArea />
+    </div>
     <PageHeader />
     <v-content>
       <v-container
@@ -122,6 +125,23 @@ export default {
   overflow: hidden;
   overflow-y: scroll;
 }
+
+// .modal-mask {
+//   opacity: 0.46;
+//   background-color: rgb(33, 33, 33);
+//   border-color: rgb(33, 33, 33);
+//   border-radius: inherit;
+//   bottom: 0;
+//   height: 100%;
+//   left: 0;
+//   position: absolute;
+//   right: 0;
+//   top: 0;
+//   transition: inherit;
+//   width: 100%;
+//   will-change: opacity;
+//   z-index: 10;
+// }
 
 .message-list {
   padding-left: 0;

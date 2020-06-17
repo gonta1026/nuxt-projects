@@ -3,7 +3,6 @@
     <HeaderBar
       @changeDrawer="changeState"
     />
-    <p>{{drawer}}</p>
     <NavigationDrawer 
       :props-drawer="drawer"
     />

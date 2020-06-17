@@ -1,8 +1,9 @@
 import firebase from "~/plugins/firebase";
 export default ({ req, route, redirect, store }) => {
   // console.log("store.state")
+  const user = store.state.chat.currentUser.email;
+  console.log(user);
   firebase.auth().onAuthStateChanged(function (user) {
-    // store.dispatch("chat/setCurrentUser", user);
     
     if (user && route.path === "/login" || user && route.path === "/signup") {
       return redirect("/group");

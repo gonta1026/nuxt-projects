@@ -39,6 +39,10 @@ export default {
 
 <style lang="scss" scoped>
 
+header {
+  height: 0;
+}
+
 .toolbar {
   width: 100%;
   display: flex;

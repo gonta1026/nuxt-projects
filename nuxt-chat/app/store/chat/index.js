@@ -13,6 +13,12 @@ export const state = () => ({
     email: ""
   }
 })
+
+export const getters = {
+  currentUser: state => {
+    return state.currentUser;
+  }
+};
 export const mutations = {
   setCurrentUser(state, user) {
     // state.currentUser.name = user.displayName
