@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="fuga">
     <div>
       <ModalArea/>
     </div>
@@ -115,12 +115,10 @@ export default {
     }
   },
   data: () => ({
-      // drawer: null,
-    }),
-    computed: {
-      // ...mapState("chat", ["modalChange"])
-    }
+  }),
+  computed: {
   }
+}
 </script>
 
 <style lang="scss" scoped>

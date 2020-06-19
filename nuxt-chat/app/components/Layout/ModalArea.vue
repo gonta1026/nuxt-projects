@@ -1,8 +1,8 @@
 <template>
-  <div class="modal-mask" v-if="modalActive" @click="modalChange(false)">
-    <!-- <GroupNew />   -->
+  <div class="modal-mask" v-if="modalActive" @click.self="modalChange(false)">
+    <GroupNew />  
     <!-- <CurrentUserProfile /> -->
-    <OtherUserProfile />
+    <!-- <OtherUserProfile /> -->
   </div>
 </template>
 
@@ -35,6 +35,6 @@ export default {
   transition: inherit;
   width: 100%;
   will-change: opacity;
-  z-index: 10;
+  z-index: 100;
 }
 </style>
