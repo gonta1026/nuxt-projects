@@ -11,19 +11,28 @@ export const state = () => ({
   currentUser: {
     // name: "",
     email: ""
-  }
+  },
+  modalActive: false
 })
 
 export const getters = {
   currentUser: state => {
     return state.currentUser;
+  },
+  modalActive: state => {
+    return state.modalActive;
   }
 };
+
 export const mutations = {
   setCurrentUser(state, user) {
     // state.currentUser.name = user.displayName
     state.currentUser.email = user.email
     // state.currentUser = user
+  },
+  modalChange(state, value) {
+    console.log("modalChange");
+    state.modalActive = value
   },
 }
 

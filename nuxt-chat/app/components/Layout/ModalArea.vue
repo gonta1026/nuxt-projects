@@ -1,11 +1,26 @@
 <template>
-  <div class="modal-mask">
+  <div class="modal-mask" v-if="modalActive" @click="modalChange(false)">
     <!-- <GroupNew />   -->
     <!-- <CurrentUserProfile /> -->
     <OtherUserProfile />
   </div>
 </template>
 
+
+<script>
+
+import { mapState, mapMutations } from 'vuex'
+
+export default {
+  computed: {
+    ...mapState("chat", ["modalActive"])
+  },
+  methods: {
+    ...mapMutations("chat", ["modalChange"])
+  }
+  
+}
+</script>
 <style lang="scss" scoped>
 .modal-mask {
   background-color: rgb(33, 33, 33, 0.46);

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <ModalArea />
+      <ModalArea/>
     </div>
     <PageHeader />
     <v-content>
@@ -107,6 +107,7 @@
 </template>
 
 <script>
+
 export default {
   head: {
     bodyAttrs: {
@@ -116,6 +117,9 @@ export default {
   data: () => ({
       // drawer: null,
     }),
+    computed: {
+      // ...mapState("chat", ["modalChange"])
+    }
   }
 </script>
 
@@ -125,24 +129,6 @@ export default {
   overflow: hidden;
   overflow-y: scroll;
 }
-
-// .modal-mask {
-//   opacity: 0.46;
-//   background-color: rgb(33, 33, 33);
-//   border-color: rgb(33, 33, 33);
-//   border-radius: inherit;
-//   bottom: 0;
-//   height: 100%;
-//   left: 0;
-//   position: absolute;
-//   right: 0;
-//   top: 0;
-//   transition: inherit;
-//   width: 100%;
-//   will-change: opacity;
-//   z-index: 10;
-// }
-
 .message-list {
   padding-left: 0;
   &__message {

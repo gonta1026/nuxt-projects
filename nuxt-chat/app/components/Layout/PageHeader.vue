@@ -20,7 +20,6 @@ export default {
   methods: {
     changeState(){
       this.drawer = !this.drawer;
-      console.log(this.drawer)
     }
   },
 }
