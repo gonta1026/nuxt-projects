@@ -1,6 +1,5 @@
 <template>
   <v-col
-  
     cols="12"
     sm="10"
     md="5"
@@ -12,7 +11,7 @@
       >
       Create group
     </v-card-title>
-    <v-container>
+    <v-form @submit.prevent="addGroup(group)">
       <v-row class="mx-2">
         <v-col
           class="align-center justify-space-between"
@@ -32,6 +31,7 @@
               >
             </v-avatar>
             <v-text-field
+              v-model="group.name"
               placeholder="Name"
             ></v-text-field>
           </v-row>
@@ -39,19 +39,17 @@
         
         <v-col cols="12">
           <v-text-field
+            v-model="group.description"
             prepend-icon="mdi-text"
             placeholder="Description"
           ></v-text-field>
         </v-col>
       </v-row>
-    </v-container>
-    <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-btn
-        text
-        @click="dialog = false"
-      >Save</v-btn>
-    </v-card-actions>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn type="submit" color="primary">Save</v-btn>
+      </v-card-actions>
+    </v-form>
   </v-card>
   </v-col>
 </template>
@@ -59,10 +57,18 @@
 <script>
   export default {
     data: () => ({
-      // dialog: true,
-      // items: [
-      // ],
+      group: {
+        name: "",
+        description: ""
+      }
     }),
+    methods: {
+      addGroup(group){
+        const {name, description} = group;
+        this.$store.dispatch("chat/addGroup", {name, description});
+        this.$store.commit("chat/modalClose");
+      }
+    }
   }
 </script>
 

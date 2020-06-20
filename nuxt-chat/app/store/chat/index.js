@@ -2,11 +2,13 @@
 import firebase from '~/plugins/firebase'
 import { firestoreAction } from 'vuexfire'
 // データベースの定義
-const db = firebase.firestore()
-const usersRef = db.collection('users')
+const db = firebase.firestore();
+const usersRef = db.collection('users');
+const groupsRef = db.collection('groups');
 // var user = firebase.auth().currentUser;
 // stateを定義
 export const state = () => ({
+  groups: [],
   users: [],
   currentUser: {
     // name: "",
@@ -26,7 +28,8 @@ export const getters = {
   },
   modalActive: state => {
     return state.modalActive;
-  }
+  },
+  orderdGroups: state => _.sortBy(state.groups, 'created')
 };
 
 export const mutations = {
@@ -36,6 +39,7 @@ export const mutations = {
     // state.currentUser = user
   },
   modalClose(state) {
+    console.log(state);
     state.modalActive.modalShow = state.modalActive.groupNewShow =　state.modalActive.currentUserShow = state.modalActive.otherUserShow = false
   },
   OpenModalContents(state, content) {
@@ -45,8 +49,9 @@ export const mutations = {
 }
 
 export const actions = {
-  initUsers: firestoreAction(({ bindFirestoreRef }) => {
+  init: firestoreAction(({ bindFirestoreRef }) => {
     bindFirestoreRef('users', usersRef)// stateのtodoと関連付けさせる
+    bindFirestoreRef('groups', groupsRef) // stateのtodoと関連付けさせる
   }),
   signUp: firestoreAction((_, user) => {
     try {
@@ -69,6 +74,13 @@ export const actions = {
   },
   setCurrentUser({commit}, user){
     commit("setCurrentUser", user)
-  }
-  
+  },
+  addGroup: firestoreAction((_, group) => {
+    groupsRef.add({
+      name: group.name,
+      description: group.description,
+      userId: 1,
+      created: firebase.firestore.FieldValue.serverTimestamp()
+    })
+  }),
 }

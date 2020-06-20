@@ -12,20 +12,22 @@
           <v-list-item-title>New Grssoup</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <nuxt-link to="/group/1">
-        <v-list-item>
-          <v-list-item-content>
-              <v-list-item-title>Contact</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </nuxt-link>
+      <template v-if="orderdGroups.length">
+        <nuxt-link  :to="`group/${group.id}`" v-for="group in orderdGroups" :key="group.id">
+          <v-list-item>
+            <v-list-item-content>
+                <v-list-item-title>{{group.name}}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </nuxt-link>
+      </template>
     </v-list>
   </v-navigation-drawer>
 </template>
 
 <script>
 
-import { mapState, mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   props: {
@@ -42,6 +44,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters("chat", ["orderdGroups"])
   },
   methods: {
     ...mapMutations("chat", ["OpenModalContents"])

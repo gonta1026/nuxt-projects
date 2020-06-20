@@ -79,17 +79,6 @@ export default {
       password: "",
     }
   }),
-  created() {
-  // if (this.todos){
-    this.$store.dispatch('chat/initUsers');    
-    // firebase.auth().onAuthStateChanged((user)=> {
-    //   if (user) {
-    //     // ログインしたときに実行するメソッド
-    //     this.$store.dispatch('todos/initUser', user);
-    //   }
-    // })
-    // }
-  },
   computed: {
     ...mapState("chat", ["users"])
   },

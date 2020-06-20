@@ -1,5 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
-
+import webpack from 'webpack'
 export default {
   mode: 'universal',
   srcDir: 'app/', //ルートディレクトリを変更
@@ -94,6 +94,11 @@ export default {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
-    }
+    },
+    plugins: [
+      new webpack.ProvidePlugin({
+        '_': 'lodash'
+      })
+    ]
   }
 }
