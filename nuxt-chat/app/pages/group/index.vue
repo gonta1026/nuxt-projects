@@ -1,5 +1,8 @@
 <template>
   <v-app id="inspire">
+    <div>
+      <ModalArea/>
+    </div>
     <PageHeader />
     <v-content>
       <v-container

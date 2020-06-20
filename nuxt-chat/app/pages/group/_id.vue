@@ -1,5 +1,5 @@
 <template>
-  <div class="fuga">
+  <div>
     <div>
       <ModalArea/>
     </div>
@@ -10,7 +10,7 @@
         <p>気になるグループがあれば是非入ってください！</p>
         <ul class="message-list">
           <li class="message-list__message">
-            <v-avatar class="message-list__message--image">
+            <v-avatar @click="OpenModalContents('otherUserShow')" class="message-list__message--image">
               <img
                 src="https://cdn.vuetifyjs.com/images/john.jpg"
                 alt="John"
@@ -22,7 +22,7 @@
             </div>            
           </li>
           <li class="message-list__message own">
-            <v-avatar class="message-list__message--image">
+            <v-avatar @click="OpenModalContents('otherUserShow')" class="message-list__message--image">
               <img
                 src="https://cdn.vuetifyjs.com/images/john.jpg"
                 alt="John"
@@ -34,7 +34,7 @@
             </div>            
           </li>
           <li class="message-list__message">
-            <v-avatar class="message-list__message--image">
+            <v-avatar @click="OpenModalContents('otherUserShow')" class="message-list__message--image">
               <img
                 src="https://cdn.vuetifyjs.com/images/john.jpg"
                 alt="John"
@@ -46,7 +46,7 @@
             </div>            
           </li>
           <li class="message-list__message">
-            <v-avatar class="message-list__message--image">
+            <v-avatar @click="OpenModalContents('otherUserShow')" class="message-list__message--image">
               <img
                 src="https://cdn.vuetifyjs.com/images/john.jpg"
                 alt="John"
@@ -58,7 +58,7 @@
             </div>            
           </li>
           <li class="message-list__message">
-            <v-avatar class="message-list__message--image">
+            <v-avatar @click="OpenModalContents('otherUserShow')" class="message-list__message--image">
               <img
                 src="https://cdn.vuetifyjs.com/images/john.jpg"
                 alt="John"
@@ -70,7 +70,7 @@
             </div>            
           </li>
           <li class="message-list__message">
-            <v-avatar class="message-list__message--image">
+            <v-avatar @click="OpenModalContents('otherUserShow')" class="message-list__message--image">
               <img
                 src="https://cdn.vuetifyjs.com/images/john.jpg"
                 alt="John"
@@ -82,7 +82,7 @@
             </div>            
           </li>
           <li class="message-list__message">
-            <v-avatar class="message-list__message--image">
+            <v-avatar @click="OpenModalContents('otherUserShow')" class="message-list__message--image">
               <img
                 src="https://cdn.vuetifyjs.com/images/john.jpg"
                 alt="John"
@@ -108,6 +108,9 @@
 
 <script>
 
+// import {mapMutation} from "vuex";
+import {mapMutations } from 'vuex'
+
 export default {
   head: {
     bodyAttrs: {
@@ -117,6 +120,9 @@ export default {
   data: () => ({
   }),
   computed: {
+    },
+  methods: {
+    ...mapMutations("chat", ["OpenModalContents"])
   }
 }
 </script>
@@ -159,7 +165,6 @@ export default {
   width: 97%;
   margin: 0;
   margin: 0 auto;
-  // padding-top: 10px;
   &__input {
     padding: 0.3em;
     width: 100%;

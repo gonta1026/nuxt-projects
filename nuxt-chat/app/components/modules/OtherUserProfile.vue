@@ -17,9 +17,6 @@
           class="align-center justify-space-between"
           cols="12"
         >
-          <v-row>
-            <input type="file">
-          </v-row>
           <v-row
             align="center"
             class="mr-0"
@@ -61,9 +58,6 @@
 <script>
   export default {
     data: () => ({
-      // dialog: true,
-      // items: [
-      // ],
     }),
   }
 </script>

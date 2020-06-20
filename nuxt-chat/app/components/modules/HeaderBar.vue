@@ -9,7 +9,7 @@
     <v-toolbar-title class="toolbar">
       <nuxt-link to="/group/">野球部</nuxt-link>
       <div class="logout" @click="logout">ログアウト</div>
-      <v-avatar>
+      <v-avatar @click="OpenModalContents('currentUserShow')">
         <img
           src="https://cdn.vuetifyjs.com/images/john.jpg"
           alt="John"
@@ -20,6 +20,9 @@
 </template>
 
 <script>
+
+import { mapMutations } from 'vuex'
+
 export default {
   methods: {
     logout(){
@@ -32,7 +35,8 @@ export default {
     },
     change(){
       this.$emit("changeDrawer");
-    }
+    },
+    ...mapMutations("chat", ["OpenModalContents"])
   }
 }
 </script>

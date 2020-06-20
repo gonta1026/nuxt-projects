@@ -5,14 +5,12 @@
   >
     <v-list dense>
       <v-list-item link>
-        <!-- <nuxt-link @click="modalActive = !modalActive"> -->
-          <v-list-item-action class="header-link">
-            <v-icon>mdi-plus</v-icon>
-          </v-list-item-action>
-          <v-list-item-content @click="modalChange(true)">
-            <v-list-item-title>New Grssoup</v-list-item-title>
-          </v-list-item-content>
-        <!-- </nuxt-link> -->
+        <v-list-item-action class="header-link">
+          <v-icon>mdi-plus</v-icon>
+        </v-list-item-action>
+        <v-list-item-content @click="OpenModalContents('groupNewShow')">
+          <v-list-item-title>New Grssoup</v-list-item-title>
+        </v-list-item-content>
       </v-list-item>
       <nuxt-link to="/group/1">
         <v-list-item>
@@ -23,14 +21,11 @@
       </nuxt-link>
     </v-list>
   </v-navigation-drawer>
-  
 </template>
-
 
 <script>
 
 import { mapState, mapMutations } from 'vuex'
-
 
 export default {
   props: {
@@ -47,10 +42,9 @@ export default {
     }
   },
   computed: {
-    ...mapState("chat", ["modalActive"]),
   },
   methods: {
-    ...mapMutations("chat", ["modalChange"])
+    ...mapMutations("chat", ["OpenModalContents"])
   }
 }
 </script>

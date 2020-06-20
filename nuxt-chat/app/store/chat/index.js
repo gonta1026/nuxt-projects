@@ -12,7 +12,12 @@ export const state = () => ({
     // name: "",
     email: ""
   },
-  modalActive: false
+  modalActive: {
+    modalShow: false,
+    groupNewShow: false,
+    currentUserShow: false,
+    otherUserShow: false,
+  },
 })
 
 export const getters = {
@@ -30,10 +35,13 @@ export const mutations = {
     state.currentUser.email = user.email
     // state.currentUser = user
   },
-  modalChange(state, value) {
-    console.log("modalChange");
-    state.modalActive = value
+  modalClose(state) {
+    state.modalActive.modalShow = state.modalActive.groupNewShow =　state.modalActive.currentUserShow = state.modalActive.otherUserShow = false
   },
+  OpenModalContents(state, content) {
+    state.modalActive.modalShow = true;
+    state.modalActive[content] = true;
+  }
 }
 
 export const actions = {

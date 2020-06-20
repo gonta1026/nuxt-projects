@@ -1,11 +1,10 @@
 <template>
-  <div class="modal-mask" v-if="modalActive" @click.self="modalChange(false)">
-    <GroupNew />  
-    <!-- <CurrentUserProfile /> -->
-    <!-- <OtherUserProfile /> -->
+  <div class="modal-mask" v-if="modalActive.modalShow" @click.self="modalClose">
+    <GroupNew v-if="modalActive.groupNewShow"/>  
+    <CurrentUserProfile v-if="modalActive.currentUserShow"/>
+    <OtherUserProfile v-if="modalActive.otherUserShow"/>
   </div>
 </template>
-
 
 <script>
 
@@ -16,9 +15,8 @@ export default {
     ...mapState("chat", ["modalActive"])
   },
   methods: {
-    ...mapMutations("chat", ["modalChange"])
+    ...mapMutations("chat", ["modalClose"])
   }
-  
 }
 </script>
 <style lang="scss" scoped>
