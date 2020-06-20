@@ -13,7 +13,7 @@
         </v-list-item-content>
       </v-list-item>
       <template v-if="orderdGroups.length">
-        <nuxt-link  :to="`group/${group.id}`" v-for="group in orderdGroups" :key="group.id">
+        <nuxt-link :to="{ name: `group-id`, params: { id: group.id }}" v-for="group in orderdGroups" :key="group.id">
           <v-list-item>
             <v-list-item-content>
                 <v-list-item-title>{{group.name}}</v-list-item-title>

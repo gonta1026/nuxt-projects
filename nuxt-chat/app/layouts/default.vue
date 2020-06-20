@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  name: "default",
   created() {
   // if (this.todos){
     this.$store.dispatch('chat/init');    

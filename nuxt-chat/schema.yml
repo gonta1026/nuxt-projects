@@ -9,9 +9,11 @@ users:
 
 groups:
   documentID: auto
-  name: String
-  description: String
-  userId: map
-  messages: subCollection
-    documentID: auto
-      message: String
+    name: String
+    description: String
+    userId: map
+      messages: subCollection
+        documentID: auto
+          message: String
+          imgae: String?
+          userId: refs

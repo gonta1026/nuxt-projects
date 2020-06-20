@@ -10,6 +10,7 @@ const groupsRef = db.collection('groups');
 export const state = () => ({
   groups: [],
   users: [],
+  messages: [],
   currentUser: {
     // name: "",
     email: ""
@@ -29,7 +30,8 @@ export const getters = {
   modalActive: state => {
     return state.modalActive;
   },
-  orderdGroups: state => _.sortBy(state.groups, 'created')
+  orderdGroups: state => _.sortBy(state.groups, 'created'),
+  orderdMessages: state => _.sortBy(state.messages, 'created')
 };
 
 export const mutations = {
@@ -45,7 +47,8 @@ export const mutations = {
   OpenModalContents(state, content) {
     state.modalActive.modalShow = true;
     state.modalActive[content] = true;
-  }
+  },
+
 }
 
 export const actions = {
@@ -53,6 +56,10 @@ export const actions = {
     bindFirestoreRef('users', usersRef)// stateのtodoと関連付けさせる
     bindFirestoreRef('groups', groupsRef) // stateのtodoと関連付けさせる
   }),
+  initMessages: firestoreAction(({ bindFirestoreRef }, pass) => {
+    const messages = groupsRef.doc(pass).collection("messages");
+    bindFirestoreRef('messages', messages)
+  }), 
   signUp: firestoreAction((_, user) => {
     try {
       firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
@@ -75,6 +82,15 @@ export const actions = {
   setCurrentUser({commit}, user){
     commit("setCurrentUser", user)
   },
+
+  addMessage: firestoreAction((_, {message, pass}) => {
+    const messages = db.collection('groups').doc(pass).collection("messages");
+    messages.add({
+      message: message,
+      userId: 1,
+      created: firebase.firestore.FieldValue.serverTimestamp()
+    })
+  }),
   addGroup: firestoreAction((_, group) => {
     groupsRef.add({
       name: group.name,

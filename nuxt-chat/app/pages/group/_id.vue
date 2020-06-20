@@ -7,9 +7,8 @@
     <v-content>
       <v-container
       >
-        <p>気になるグループがあれば是非入ってください！</p>
         <ul class="message-list">
-          <li class="message-list__message">
+          <li v-for="message in orderdMessages" :key="message.id" class="message-list__message">
             <v-avatar @click="OpenModalContents('otherUserShow')" class="message-list__message--image">
               <img
                 src="https://cdn.vuetifyjs.com/images/john.jpg"
@@ -18,76 +17,10 @@
             </v-avatar>
             <div class="content">
               <div class="content__name">Josh</div>
-              <div class="content__detail">僕は今日は野球がしたいんだなーーーーーーーーーーーーーーーーーーーーーーー</div>
+              <div class="content__detail">{{message.message}}</div>
             </div>            
           </li>
           <li class="message-list__message own">
-            <v-avatar @click="OpenModalContents('otherUserShow')" class="message-list__message--image">
-              <img
-                src="https://cdn.vuetifyjs.com/images/john.jpg"
-                alt="John"
-              >
-            </v-avatar>
-            <div class="content">
-              <div class="content__name">Josh</div>
-              <div class="content__detail">僕は今日は野球がしたいんだなーーーーーーーーーーーーーーーーーーーーーーー</div>
-            </div>            
-          </li>
-          <li class="message-list__message">
-            <v-avatar @click="OpenModalContents('otherUserShow')" class="message-list__message--image">
-              <img
-                src="https://cdn.vuetifyjs.com/images/john.jpg"
-                alt="John"
-              >
-            </v-avatar>
-            <div class="content">
-              <div class="content__name">Josh</div>
-              <div class="content__detail">僕は今日は野球がしたいんだなーーーーーーーーーーーーーーーーーーーーーーー</div>
-            </div>            
-          </li>
-          <li class="message-list__message">
-            <v-avatar @click="OpenModalContents('otherUserShow')" class="message-list__message--image">
-              <img
-                src="https://cdn.vuetifyjs.com/images/john.jpg"
-                alt="John"
-              >
-            </v-avatar>
-            <div class="content">
-              <div class="content__name">Josh</div>
-              <div class="content__detail">僕は今日は野球がしたいんだなーーーーーーーーーーーーーーーーーーーーーーー</div>
-            </div>            
-          </li>
-          <li class="message-list__message">
-            <v-avatar @click="OpenModalContents('otherUserShow')" class="message-list__message--image">
-              <img
-                src="https://cdn.vuetifyjs.com/images/john.jpg"
-                alt="John"
-              >
-            </v-avatar>
-            <div class="content">
-              <div class="content__name">Josh</div>
-              <div class="content__detail">僕は今日は野球がしたいんだなーーーーーーーーーーーーーーーーーーーーーーー</div>
-            </div>            
-          </li>
-          <li class="message-list__message">
-            <v-avatar @click="OpenModalContents('otherUserShow')" class="message-list__message--image">
-              <img
-                src="https://cdn.vuetifyjs.com/images/john.jpg"
-                alt="John"
-              >
-            </v-avatar>
-            <div class="content">
-              <div class="content__name">Josh</div>
-              <div class="content__detail">僕は今日は野球がしたいんだなーーーーーーーーーーーーーーーーーーーーーーー</div>
-            </div>            
-          </li>
-          <li class="message-list__message">
-            <v-avatar @click="OpenModalContents('otherUserShow')" class="message-list__message--image">
-              <img
-                src="https://cdn.vuetifyjs.com/images/john.jpg"
-                alt="John"
-              >
-            </v-avatar>
             <div class="content">
               <div class="content__name">Josh</div>
               <div class="content__detail">僕は今日は野球がしたいんだなーーーーーーーーーーーーーーーーーーーーーーー</div>
@@ -95,8 +28,11 @@
           </li>
         </ul>
       </v-container>
-      <form class="new-message">
-        <input type="text" class="new-message__input" placeholder="message">
+      <form @submit.prevent="addMessage({message, pass: $route.params.id})" class="new-message">
+        <input type="text"
+          v-model="message"
+          class="new-message__input"
+          placeholder="message">
         <div class="new-message__btns">
           <v-icon>fas fa-reply</v-icon>
           <v-icon>fa-image</v-icon>
@@ -108,8 +44,7 @@
 
 <script>
 
-// import {mapMutation} from "vuex";
-import {mapMutations } from 'vuex'
+import {mapMutations, mapActions, mapGetters } from 'vuex'
 
 export default {
   head: {
@@ -117,12 +52,19 @@ export default {
       class: 'group-show'
     }
   },
+  // name: "group-show",
+  created(){
+    this.$store.dispatch("chat/initMessages", this.$route.params.id)
+  },
   data: () => ({
+    message: "",
   }),
   computed: {
+    ...mapGetters("chat", ["orderdMessages"])
     },
   methods: {
-    ...mapMutations("chat", ["OpenModalContents"])
+    ...mapMutations("chat", ["OpenModalContents"]),
+    ...mapActions("chat", ["addMessage"]),
   }
 }
 </script>

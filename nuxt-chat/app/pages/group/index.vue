@@ -22,6 +22,7 @@ export default {
       class: 'group'
     }
   },
+  // name: "group",
   data: () => ({
     drawer: null,
   }),
