@@ -52,7 +52,6 @@ export default {
       class: 'group-show'
     }
   },
-  // name: "group-show",
   created(){
     this.$store.dispatch("chat/initMessages", this.$route.params.id)
   },
@@ -64,7 +63,10 @@ export default {
     },
   methods: {
     ...mapMutations("chat", ["OpenModalContents"]),
-    ...mapActions("chat", ["addMessage"]),
+    addMessage(messageAndPass){
+      this.$store.dispatch("chat/addMessage", messageAndPass);
+      this.message = "";
+    }
   }
 }
 </script>
