@@ -9,6 +9,8 @@
     <v-toolbar-title class="toolbar">
       <nuxt-link to="/group/">野球部</nuxt-link>
       <div class="logout" @click="logout">ログアウト</div>
+      <nuxt-link to="/signup/">新規登録</nuxt-link>
+      <nuxt-link to="/login/">ログイン</nuxt-link>
       <v-avatar @click="OpenModalContents('currentUserShow')">
         <img
           src="https://cdn.vuetifyjs.com/images/john.jpg"

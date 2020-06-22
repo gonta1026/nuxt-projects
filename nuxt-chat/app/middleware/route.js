@@ -4,13 +4,13 @@ export default ({ req, route, redirect, store }) => {
   const user = store.state.chat.currentUser.email;
   console.log(user);
   firebase.auth().onAuthStateChanged(function (user) {
-    
-    if (user && route.path === "/login" || user && route.path === "/signup") {
+    console.log(user);
+    if (user && route.path === "/login/" || user && route.path === "/signup/") {
       return redirect("/group");
     }
 
     /* ログインしていないのに "ログインと新規登録" 以外のページに行ったらloginページに戻す*/
-    if (!user && route.path !== "/login" || !user && route.path !== "/signup") {
+    if (!user && route.path !== "/login/" || !user && route.path !== "/signup/") {
       return redirect("/login");
     }
   });

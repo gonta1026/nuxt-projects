@@ -33,7 +33,7 @@
                     type="text"
                     v-model="user.email"
                   ></v-text-field>
-
+                  
                   <v-text-field
                     id="password"
                     label="Password"
@@ -42,9 +42,10 @@
                     type="password"
                     v-model="user.password"
                   ></v-text-field>
-                  <nuxt-link to="/group">グループにとぶ</nuxt-link>
                   <v-btn type="submit" color="primary">Login</v-btn>
                 </v-form>
+                <nuxt-link to="/group/">グループにとぶ</nuxt-link>
+                <nuxt-link to="/signup/">新規登録</nuxt-link>
               </v-card-text>
             </v-card>
           </v-col>
