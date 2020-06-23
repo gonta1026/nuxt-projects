@@ -76,8 +76,12 @@ export const actions = {
     const result = await firebase.auth().signInWithEmailAndPassword(user.email, user.password);
     commit('setCurrentUser', result.user)
   },
-  async logout() {
-    await firebase.auth().signOut()
+  // async logout() {
+  //   await firebase.auth().signOut()
+  // },
+  logout({commit}) {
+    firebase.auth().signOut();
+    // commit("logout");
   },
   setCurrentUser({commit}, user){
     commit("setCurrentUser", user)

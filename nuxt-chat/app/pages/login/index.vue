@@ -26,6 +26,7 @@
               <v-card-text>
                 <v-form @submit.prevent="login(user)">
 　　　　　　　　　　　<v-text-field
+                    ref="email"
                     label="Email"
                     name="email"
                     color="teal darken-2"
@@ -71,6 +72,9 @@ export default {
       password: "",
     }
   }),
+  mounted () {
+    this.$refs.email.focus();
+  },
   computed: {
   },
   methods: {

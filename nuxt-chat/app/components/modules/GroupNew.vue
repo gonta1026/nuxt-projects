@@ -31,6 +31,7 @@
               >
             </v-avatar>
             <v-text-field
+              ref="name"
               v-model="group.name"
               placeholder="Name"
             ></v-text-field>
@@ -62,6 +63,9 @@
         description: ""
       }
     }),
+    mounted () {
+      this.$refs.name.focus();
+    },
     methods: {
       addGroup(group){
         const {name, description} = group;

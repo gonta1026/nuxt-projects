@@ -29,7 +29,9 @@
         </ul>
       </v-container>
       <form @submit.prevent="addMessage({message, pass: $route.params.id})" class="new-message">
-        <input type="text"
+        <input
+          ref="message" 
+          type="text"
           v-model="message"
           class="new-message__input"
           placeholder="message">
@@ -54,6 +56,9 @@ export default {
   },
   created(){
     this.$store.dispatch("chat/initMessages", this.$route.params.id)
+  },
+  mounted () {
+    this.$refs.message.focus();
   },
   data: () => ({
     message: "",

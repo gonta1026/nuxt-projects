@@ -26,6 +26,7 @@
               <v-card-text>
                 <v-form @submit.prevent="signUp(user)">
                   <v-text-field
+                    ref="name"
                     label="Name"
                     name="name"
                     prepend-icon="mdi-account"
@@ -79,6 +80,9 @@ export default {
       password: "",
     }
   }),
+  mounted () {
+    this.$refs.name.focus();
+  },
   computed: {
     ...mapState("chat", ["users"])
   },

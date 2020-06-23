@@ -30,7 +30,7 @@ export default {
     logout(){
       try {
         this.$store.dispatch("chat/logout")
-        this.$router.push('/login')
+        this.$router.push('/login/')
       }catch {
         console.log("ログアウトに失敗しました")
       }
