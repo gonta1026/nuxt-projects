@@ -36,7 +36,8 @@
           class="new-message__input"
           placeholder="message">
         <div class="new-message__btns">
-          <v-icon>fas fa-reply</v-icon>
+          <v-btn class="btn" type="submit"><v-icon>fas fa-reply</v-icon></v-btn>
+          
           <v-icon>fa-image</v-icon>
         </div>
       </form>
@@ -127,6 +128,11 @@ export default {
     }
   }
   &__btns {
+    .btn {
+      padding: 0;
+      min-width: 0;
+      margin-left: 10px;
+    }
     display: flex;
     flex-direction: row-reverse;
     padding: 10px 0 0;
@@ -140,9 +146,9 @@ export default {
     }
     .fa-image {
       background:#FBC02D;
-      &:nth-of-type(n + 2){
-        margin-right: 10px;
-      }
+      // &:nth-of-type(n + 2){
+      //   margin-right: 10px;
+      // }
     }
   }
 }
