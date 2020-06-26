@@ -9,7 +9,7 @@
       >
         <ul class="message-list">
           <li v-for="message in orderdMessages" :key="message.id" class="message-list__message">
-            <v-avatar @click="OpenModalContents('otherUserShow')" class="message-list__message--image">
+            <v-avatar @click="OpenModalContents('isOtherUserProfile')" class="message-list__message--image">
               <img
                 src="https://cdn.vuetifyjs.com/images/john.jpg"
                 alt="John"
@@ -55,18 +55,23 @@ export default {
       class: 'group-show'
     }
   },
+
   created(){
     this.$store.dispatch("chat/initMessages", this.$route.params.id)
   },
+
   mounted () {
     this.$refs.message.focus();
   },
+
   data: () => ({
     message: "",
   }),
+
   computed: {
     ...mapGetters("chat", ["orderdMessages"])
-    },
+  },
+  
   methods: {
     ...mapMutations("chat", ["OpenModalContents"]),
     addMessage(messageAndPass){

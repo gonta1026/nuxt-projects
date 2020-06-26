@@ -8,7 +8,7 @@
         <v-list-item-action class="header-link">
           <v-icon>mdi-plus</v-icon>
         </v-list-item-action>
-        <v-list-item-content @click="OpenModalContents('groupNewShow')">
+        <v-list-item-content @click="OpenModalContents('isMaskActive')">
           <v-list-item-title>New Grssoup</v-list-item-title>
         </v-list-item-content>
       </v-list-item>

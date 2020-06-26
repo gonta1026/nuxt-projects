@@ -20,7 +20,6 @@
     </v-toolbar-title>
   </v-app-bar>
 </template>
-
 <script>
 
 import { mapMutations } from 'vuex'
