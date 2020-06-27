@@ -96,8 +96,6 @@ export const actions = {
   },
 
   addMessage: firestoreAction(({state}, {message, pass}) => {
-    console.log(state.currentUser.id);
-    console.log(state.currentUser.name);
     const messages = db.collection('groups').doc(pass).collection("messages");
     messages.add({
       message: message,
@@ -108,11 +106,12 @@ export const actions = {
       }
     })
   }),
-  addGroup: firestoreAction((_, group) => {
+  addGroup: firestoreAction(({state}, group) => {
     groupsRef.add({
       name: group.name,
       description: group.description,
-      userId: 1,
+      // userId: state.currentUser.id,
+      userId: [state.currentUser.id],
       created: firebase.firestore.FieldValue.serverTimestamp()
     })
   }),
