@@ -16,14 +16,13 @@
               >
             </v-avatar>
             <div class="content">
-              <div class="content__name">Josh</div>
+              <div class="content__name">{{message.user.name}}</div>
               <div class="content__detail">{{message.message}}</div>
             </div>            
           </li>
           <li class="message-list__message own">
             <div class="content">
-              <div class="content__name">Josh</div>
-              <div class="content__detail">僕は今日は野球がしたいんだなーーーーーーーーーーーーーーーーーーーーーーー</div>
+              <div class="content__detail">こっちはカレントユーザーのメッセージにしたい。</div>
             </div>            
           </li>
         </ul>
@@ -69,13 +68,15 @@ export default {
   }),
 
   computed: {
-    ...mapGetters("chat", ["orderdMessages"])
+    ...mapGetters("chat", ["orderdMessages"]),
+    ...mapGetters("chat", ["orderdMessages", "currentUser"])
   },
   
   methods: {
     ...mapMutations("chat", ["OpenModalContents"]),
+
     addMessage(messageAndPass){
-      this.$store.dispatch("chat/addMessage", messageAndPass);
+      this.$store.dispatch("chat/addMessage", messageAndPass, this.currentUser);
       this.message = "";
     }
   }

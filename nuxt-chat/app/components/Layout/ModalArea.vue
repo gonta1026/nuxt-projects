@@ -1,7 +1,7 @@
 <template>
-  <div class="modal-mask" v-if="modalActive.isModalMaskActive" @click.self="modalClose">
-    <GroupNew v-if="modalActive.isModalGroupNewActive"/>  
-    <CurrentUserProfile v-if="modalActive.currentUserShow"/>
+  <div class="modal-mask" v-if="modalActive.isMaskActive" @click.self="modalClose">
+    <GroupNew v-if="modalActive.isGroupNewFrom"/>  
+    <CurrentUserProfile v-if="modalActive.isCurrentUserProfile"/>
     <OtherUserProfile v-if="modalActive.isOtherUserProfile"/>
   </div>
 </template>

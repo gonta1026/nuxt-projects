@@ -15,7 +15,6 @@ export const state = () => ({
   currentUser: {
     id: "",
     name: "",
-    
     email: ""
   },
 
@@ -28,15 +27,12 @@ export const state = () => ({
 })
 
 export const getters = {
-  currentUser: state => {
-    return state.currentUser;
-  },
+  currentUser: state => state.currentUser,
 
-  modalActive: state => {
-    return state.modalActive;
-  },
+  modalActive: state => state.modalActive,
 
   orderdGroups: state => _.sortBy(state.groups, 'created'),
+
   orderdMessages: state => _.sortBy(state.messages, 'created')
 };
 
@@ -48,11 +44,14 @@ export const mutations = {
   },
 
   modalClose(state) {
-    state.modalActive.isModalMaskActive = state.modalActive.isMaskActive = state.modalActive.currentUserShow = state.modalActive.isOtherUserProfile = false
+      state.modalActive.isMaskActive
+    = state.modalActive.isGroupNewFrom
+    = state.modalActive.isCurrentUserProfile
+    = state.modalActive.isOtherUserProfile = false
   },
 
   OpenModalContents(state, content) {
-    state.modalActive.isModalMaskActive = true;
+    state.modalActive.isMaskActive = true;
     state.modalActive[content] = true;
   },
 }
@@ -82,7 +81,7 @@ export const actions = {
   }),
   async login(context, user){
     const result = await firebase.auth().signInWithEmailAndPassword(user.email, user.password);
-    const currentUser = _.find(context.state.users, (user) => user.email === result.user.email)
+    const currentUser = _.find(context.state.users, user => user.email === result.user.email)
     context.commit('setCurrentUser', currentUser)
 
   },
@@ -96,12 +95,17 @@ export const actions = {
     commit("setCurrentUser", user)
   },
 
-  addMessage: firestoreAction((_, {message, pass}) => {
+  addMessage: firestoreAction(({state}, {message, pass}) => {
+    console.log(state.currentUser.id);
+    console.log(state.currentUser.name);
     const messages = db.collection('groups').doc(pass).collection("messages");
     messages.add({
       message: message,
-      userId: 1,
-      created: firebase.firestore.FieldValue.serverTimestamp()
+      created: firebase.firestore.FieldValue.serverTimestamp(),
+      user: {
+        id: state.currentUser.id,
+        name: state.currentUser.name
+      }
     })
   }),
   addGroup: firestoreAction((_, group) => {
