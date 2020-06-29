@@ -1,6 +1,8 @@
 
 import firebase from '~/plugins/firebase'
 import { firestoreAction } from 'vuexfire'
+import 'firebase/storage'
+const firestorage = firebase.storage()
 
 const db = firebase.firestore();
 
@@ -114,5 +116,9 @@ export const actions = {
       userId: [state.currentUser.id],
       created: firebase.firestore.FieldValue.serverTimestamp()
     })
+  }),
+
+  updateUserProfile: firestoreAction(({state}, avator) => {
+    console.log(avator)
   }),
 }
