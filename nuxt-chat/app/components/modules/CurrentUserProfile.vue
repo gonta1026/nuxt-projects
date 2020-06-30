@@ -85,7 +85,7 @@
 
       updateUserProfile(user){
         console.log(user.avator)
-        this.$store.dispatch("chat", 'updateUserProfile', user.avator)
+        this.$store.dispatch("chat/updateUserProfile", user.avator)
       }
     }
 

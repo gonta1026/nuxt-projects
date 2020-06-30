@@ -1,7 +1,9 @@
 
+import uuid from 'uuid'
 import firebase from '~/plugins/firebase'
 import { firestoreAction } from 'vuexfire'
 import 'firebase/storage'
+
 const firestorage = firebase.storage()
 
 const db = firebase.firestore();
@@ -117,8 +119,8 @@ export const actions = {
       created: firebase.firestore.FieldValue.serverTimestamp()
     })
   }),
-
-  updateUserProfile: firestoreAction(({state}, avator) => {
-    console.log(avator)
-  }),
+  async updateUserProfile(context, avator){
+    const fileName = uuid();
+    const uploadTask = await firestorage.ref('images/' + fileName).put(avator)
+  }
 }
