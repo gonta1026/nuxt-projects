@@ -68,7 +68,6 @@ export default {
   }),
 
   computed: {
-    ...mapGetters("chat", ["orderdMessages"]),
     ...mapGetters("chat", ["orderdMessages", "currentUser"])
   },
   

@@ -11,6 +11,9 @@
       <div class="logout" @click="logout">ログアウト</div>
       <nuxt-link to="/signup/">新規登録</nuxt-link>
       <nuxt-link to="/login/">ログイン</nuxt-link>
+      <template v-if=currentUser.name>
+        {{currentUser.name}}
+      </template>
       <v-avatar @click="OpenModalContents('isCurrentUserProfile')">
         <img
           src="https://cdn.vuetifyjs.com/images/john.jpg"
@@ -22,9 +25,13 @@
 </template>
 <script>
 
-import { mapMutations } from 'vuex'
+import { mapMutations, mapGetters, mapActions } from 'vuex'
 
 export default {
+  computed: {
+    ...mapGetters("chat", ["currentUser"]),
+  },
+
   methods: {
     logout(){
       try {

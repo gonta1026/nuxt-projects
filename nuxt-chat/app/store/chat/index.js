@@ -122,5 +122,9 @@ export const actions = {
   async updateUserProfile(context, avator){
     const fileName = uuid();
     const uploadTask = await firestorage.ref('images/' + fileName).put(avator)
-  }
+    // const currentUser = _.find(context.state.users, user => user.email === result.user.email)
+  },
+  // OpenModalContents({state}, ){
+
+  // }
 }

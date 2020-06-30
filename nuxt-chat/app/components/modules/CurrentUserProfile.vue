@@ -44,7 +44,9 @@
             <v-text-field
               prepend-icon="mdi-text"
               placeholder="Description"
+              :value="currentUser.name"
             ></v-text-field>
+            
           </v-col>
         </v-row>
         <v-btn
@@ -61,34 +63,33 @@
   </v-col>
 </template>
 
+
 <script>
+import { mapMutations, mapGetters, mapActions } from 'vuex'
+
   export default {
     data: () => ({
       user: {
         name: "",
         avator: "",
-
       }
     }),
 
+    computed: {
+      ...mapGetters("chat", ["currentUser"])
+    },
+
     methods: {
       selectedFile(e) {
-          e.preventDefault();
-          let files = e.target.files;
-          this.user.avator = files[0];
-          // console.log(this.user.avator.name)
-          // console.log(this.user.avator.lastModified)
-          // console.log(this.user.avator.lastModifiedDate)
-          // console.log(this.user.avator.size)
-          // console.log(this.user.avator.type)
+        e.preventDefault();
+        let files = e.target.files;
+        this.user.avator = files[0];
       },
 
       updateUserProfile(user){
-        console.log(user.avator)
         this.$store.dispatch("chat/updateUserProfile", user.avator)
       }
     }
-
   }
 </script>
 
