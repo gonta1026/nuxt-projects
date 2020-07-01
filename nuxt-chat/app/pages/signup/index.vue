@@ -43,6 +43,10 @@
                     v-model="user.email"
                   ></v-text-field>
 
+                  <v-row>
+                    <input @change="selectedFile" type="file" name="file">
+                  </v-row>
+
                   <v-text-field
                     id="password"
                     label="Password"
@@ -77,6 +81,7 @@ export default {
     user: {
       name: "",
       email: "",
+      avator: "",
       password: "",
     }
   }),
@@ -87,11 +92,17 @@ export default {
     ...mapState("chat", ["users"])
   },
   methods: {
+    selectedFile(e) {
+      e.preventDefault();
+      let files = e.target.files;
+      this.user.avator = files[0];
+    },
+    
     signUp(user){
       try {
-        const {name, email, password} = user;
-        this.$store.dispatch('chat/signUp', {name, email, password})
-        this.user.name = this.user.email = this.user.password = '';
+        const {name, email, avator, password} = user;
+        this.$store.dispatch('chat/signUp', {name, email, avator, password})
+        this.user.name = this.user.email = this.user.avator = this.user.password = '';
         this.$router.push('/login')
       } catch {
         console.log("新規登録に失敗しました！");

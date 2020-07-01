@@ -71,18 +71,25 @@ export const actions = {
     bindFirestoreRef('messages', messages)
   }), 
 
-  signUp: firestoreAction(({commit}, user) => {
+  async signUp({commit}, user){
+    console.log(user)
+    console.log(user.avator)
+    const fileName = uuid();
     try {
+      const uploadTask = await firestorage.ref('fuga/' + fileName).put(user.avator);
+      const url = await uploadTask.ref.getDownloadURL();
       firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
       usersRef.add({
         name: user.name,
         email: user.email,
+        avator: url,
         created: firebase.firestore.FieldValue.serverTimestamp()
       })
     } catch {
       console.log("新規登録に失敗しました！");
     }
-  }),
+  },
+
   async login(context, user){
     const result = await firebase.auth().signInWithEmailAndPassword(user.email, user.password);
     const currentUser = _.find(context.state.users, user => user.email === result.user.email)
@@ -121,7 +128,10 @@ export const actions = {
   }),
   async updateUserProfile(context, avator){
     const fileName = uuid();
-    const uploadTask = await firestorage.ref('images/' + fileName).put(avator)
+    const uploadTask = await firestorage.ref('images/' + fileName).put(avator);
+    console.log(uploadTask);
+    const url = await uploadTask.ref.getDownloadURL();
+    console.log(url);
     // const currentUser = _.find(context.state.users, user => user.email === result.user.email)
   },
   // OpenModalContents({state}, ){
