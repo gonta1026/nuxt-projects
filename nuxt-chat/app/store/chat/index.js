@@ -72,8 +72,6 @@ export const actions = {
   }), 
 
   async signUp({commit}, user){
-    console.log(user)
-    console.log(user.avator)
     const fileName = uuid();
     try {
       const uploadTask = await firestorage.ref('fuga/' + fileName).put(user.avator);
@@ -129,12 +127,6 @@ export const actions = {
   async updateUserProfile(context, avator){
     const fileName = uuid();
     const uploadTask = await firestorage.ref('images/' + fileName).put(avator);
-    console.log(uploadTask);
     const url = await uploadTask.ref.getDownloadURL();
-    console.log(url);
-    // const currentUser = _.find(context.state.users, user => user.email === result.user.email)
   },
-  // OpenModalContents({state}, ){
-
-  // }
 }
