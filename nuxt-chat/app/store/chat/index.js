@@ -3,6 +3,10 @@ import uuid from 'uuid'
 import firebase from '~/plugins/firebase'
 import { firestoreAction } from 'vuexfire'
 import 'firebase/storage'
+import Cookies from "universal-cookie"
+const cookies = new Cookies();
+
+
 
 const firestorage = firebase.storage()
 
@@ -92,14 +96,18 @@ export const actions = {
     const result = await firebase.auth().signInWithEmailAndPassword(user.email, user.password);
     const currentUser = _.find(context.state.users, user => user.email === result.user.email)
     context.commit('setCurrentUser', currentUser)
-
+    cookies.set('loginNow', 'loginNow', {path: '/'});
   },
   async logout() {
     await firebase.auth().signOut()
+    cookies.remove('loginNow');
+    cookies.remove('loginNow');
+    console.log(cookies.get(cookies.get('loginNow')))
+    console.log("ログアウトした！")
   },
-  logout({commit}) {
-    firebase.auth().signOut();
-  },
+  // logout({commit}) {
+  //   firebase.auth().signOut();
+  // },
   setCurrentUser({commit}, user){
     commit("setCurrentUser", user)
   },
