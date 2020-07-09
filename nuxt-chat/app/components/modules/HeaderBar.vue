@@ -7,7 +7,7 @@
   >
     <v-app-bar-nav-icon @click="change"></v-app-bar-nav-icon>
     <v-toolbar-title class="toolbar">
-      <nuxt-link to="/group/">野球部</nuxt-link>
+      <h2 v-if="$route.name == 'group-id'">{{currentGroup.name}}</h2>
       <div class="logout" @click="logout">ログアウト</div>
       <nuxt-link to="/signup/">新規登録</nuxt-link>
       <nuxt-link to="/login/">ログイン</nuxt-link>
@@ -28,7 +28,7 @@ import { mapMutations, mapGetters, mapActions } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters("chat", ["currentUser"]),
+    ...mapGetters("chat", ["currentUser", "currentGroup"]),
   },
 
   methods: {

@@ -11,7 +11,6 @@ const db = firebase.firestore();
 
 const usersRef = db.collection('users');
 const groupsRef = db.collection('groups');
-
 export const state = () => ({
   groups: [],
   users: [],
@@ -22,6 +21,11 @@ export const state = () => ({
     name: "",
     email: "",
     avator: ""
+  },
+  
+  currentGroup: {
+    id: "",
+    name: "",
   },
 
   modalActive: {
@@ -34,21 +38,24 @@ export const state = () => ({
 
 export const getters = {
   currentUser: state => state.currentUser,
-
+  currentGroup: state => state.currentGroup,
   modalActive: state => state.modalActive,
-
   orderdGroups: state => _.sortBy(state.groups, 'created'),
-
   orderdMessages: state => _.sortBy(state.messages, 'created')
 };
 
 export const mutations = {
   setCurrentUser(state, user) {
-    console.log(user);
     state.currentUser.id = user.id
     state.currentUser.name = user.name
     state.currentUser.email = user.email
     state.currentUser.avator = user.avator
+  },
+
+  setCurrentGroup(state, group){
+    console.log(group);
+    state.currentGroup.id = group.id
+    state.currentGroup.name = group.name
   },
 
   modalClose(state) {
@@ -96,28 +103,23 @@ export const actions = {
     const result = await firebase.auth().signInWithEmailAndPassword(user.email, user.password);
     const currentUser = _.find(context.state.users, user => user.email === result.user.email)
     context.commit('setCurrentUser', currentUser)
-    cookies.set('loginNow', 'loginNow', {path: '/'});
+    cookies.set('login_now', 'login_now', {path: '/'});
   },
   async logout() {
     await firebase.auth().signOut()
-    cookies.remove('loginNow');
-    cookies.remove('loginNow');
-    console.log(cookies.get(cookies.get('loginNow')))
+    cookies.remove('login_now');
+    console.log(cookies.get(cookies.get('login_now')))
     console.log("ログアウトした！")
   },
   // logout({commit}) {
   //   firebase.auth().signOut();
   // },
   setCurrentUser({commit}, user){
-    console.log(user)
     commit("setCurrentUser", user)
   },
 
   addMessage: firestoreAction(({state}, {message, pass}) => {
     const messages = db.collection('groups').doc(pass).collection("messages");
-    console.log(pass);
-    console.log(state.currentUser.id);
-    console.log(state.currentUser.name);
     messages.add({
       message: message,
       created: firebase.firestore.FieldValue.serverTimestamp(),

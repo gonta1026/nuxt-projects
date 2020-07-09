@@ -13,7 +13,10 @@
         </v-list-item-content>
       </v-list-item>
       <template v-if="orderdGroups.length">
-        <nuxt-link :to="{ name: `group-id`, params: { id: group.id }}" v-for="group in orderdGroups" :key="group.id">
+        <template>
+            
+        </template>
+        <nuxt-link :to="{ name: `group-id`, params: { id: group.id }}" v-for="group in orderdGroups" :key="group.id" @click.native="setCurrentGroup(group)">
           <v-list-item>
             <v-list-item-content>
                 <v-list-item-title>{{group.name}}</v-list-item-title>
@@ -44,11 +47,14 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("chat", ["orderdGroups"])
+    ...mapGetters("chat", ["orderdGroups", "currentGroup"])
   },
   methods: {
-    ...mapMutations("chat", ["OpenModalContents"])
-  }
+    ...mapMutations("chat", ["OpenModalContents"]),
+    setCurrentGroup(group){
+      this.$store.commit("chat/setCurrentGroup", group);
+    }
+  },
 }
 </script>
 
