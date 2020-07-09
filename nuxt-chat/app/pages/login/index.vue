@@ -45,8 +45,8 @@
                   ></v-text-field>
                   <v-btn type="submit" color="primary">Login</v-btn>
                 </v-form>
-                <nuxt-link to="/group/">グループにとぶ</nuxt-link>
-                <nuxt-link to="/signup/">新規登録</nuxt-link>
+                <!-- <nuxt-link to="/group/">グループにとぶ</nuxt-link> -->
+                <nuxt-link to="/signup/">新規登録のページはこちらです。</nuxt-link>
               </v-card-text>
             </v-card>
           </v-col>

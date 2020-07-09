@@ -38,7 +38,7 @@
         <div class="new-message__btns">
           <v-btn class="btn" type="submit"><v-icon>fas fa-reply</v-icon></v-btn>
           
-          <v-icon>fa-image</v-icon>
+          <!-- <v-icon>fa-image</v-icon> -->
         </div>
       </form>
     </v-content>
@@ -76,6 +76,9 @@ export default {
     ...mapMutations("chat", ["OpenModalContents"]),
 
     addMessage(messageAndPass){
+      if(messageAndPass.message === ""){
+        return false
+      }
       this.$store.dispatch("chat/addMessage", messageAndPass, this.currentUser);
       this.message = "";
     }

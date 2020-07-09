@@ -53,7 +53,6 @@ export const mutations = {
   },
 
   setCurrentGroup(state, group){
-    console.log(group);
     state.currentGroup.id = group.id
     state.currentGroup.name = group.name
   },
@@ -107,8 +106,7 @@ export const actions = {
   },
   async logout() {
     await firebase.auth().signOut()
-    cookies.remove('login_now');
-    console.log(cookies.get(cookies.get('login_now')))
+    cookies.remove('login_now', {path: '/'});
     console.log("ログアウトした！")
   },
   // logout({commit}) {
