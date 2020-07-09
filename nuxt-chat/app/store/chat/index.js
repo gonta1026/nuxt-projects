@@ -5,9 +5,6 @@ import { firestoreAction } from 'vuexfire'
 import 'firebase/storage'
 import Cookies from "universal-cookie"
 const cookies = new Cookies();
-
-
-
 const firestorage = firebase.storage()
 
 const db = firebase.firestore();
@@ -23,7 +20,8 @@ export const state = () => ({
   currentUser: {
     id: "",
     name: "",
-    email: ""
+    email: "",
+    avator: ""
   },
 
   modalActive: {
@@ -46,9 +44,11 @@ export const getters = {
 
 export const mutations = {
   setCurrentUser(state, user) {
+    console.log(user);
     state.currentUser.id = user.id
     state.currentUser.name = user.name
     state.currentUser.email = user.email
+    state.currentUser.avator = user.avator
   },
 
   modalClose(state) {
@@ -77,19 +77,19 @@ export const actions = {
 
   async signUp({commit}, user){
     const fileName = uuid();
-    try {
-      const uploadTask = await firestorage.ref('fuga/' + fileName).put(user.avator);
-      const url = await uploadTask.ref.getDownloadURL();
-      firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
-      usersRef.add({
-        name: user.name,
-        email: user.email,
-        avator: url,
-        created: firebase.firestore.FieldValue.serverTimestamp()
-      })
-    } catch {
-      console.log("新規登録に失敗しました！");
-    }
+    // try {
+    const uploadTask = await firestorage.ref('images/' + fileName).put(user.avator);
+    const url = await uploadTask.ref.getDownloadURL();
+    firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
+    usersRef.add({
+      name: user.name,
+      email: user.email,
+      avator: url,
+      created: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    // } catch {
+      // console.log("新規登録に失敗しました！");
+    // }
   },
 
   async login(context, user){
@@ -109,11 +109,15 @@ export const actions = {
   //   firebase.auth().signOut();
   // },
   setCurrentUser({commit}, user){
+    console.log(user)
     commit("setCurrentUser", user)
   },
 
   addMessage: firestoreAction(({state}, {message, pass}) => {
     const messages = db.collection('groups').doc(pass).collection("messages");
+    console.log(pass);
+    console.log(state.currentUser.id);
+    console.log(state.currentUser.name);
     messages.add({
       message: message,
       created: firebase.firestore.FieldValue.serverTimestamp(),

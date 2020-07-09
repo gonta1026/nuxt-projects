@@ -43,9 +43,6 @@
                     v-model="user.email"
                   ></v-text-field>
 
-                  <v-row>
-                    <input @change="selectedFile" type="file" name="file">
-                  </v-row>
 
                   <v-text-field
                     id="password"
@@ -55,6 +52,9 @@
                     type="password"
                     v-model="user.password"
                   ></v-text-field>
+                  <v-row>
+                    <input @change="selectedFile" type="file" name="file">
+                  </v-row>
                   <v-btn type="submit" color="primary">Sign up</v-btn>
                 </v-form>
               </v-card-text>

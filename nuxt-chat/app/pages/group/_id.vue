@@ -15,12 +15,13 @@
                 alt="John"
               >
             </v-avatar>
+            
             <div class="content">
               <div class="content__name">{{message.user.name}}</div>
               <div class="content__detail">{{message.message}}</div>
             </div>            
           </li>
-          <li class="message-list__message own">
+          <li class="message-list__message opponent">
             <div class="content">
               <div class="content__detail">こっちはカレントユーザーのメッセージにしたい。</div>
             </div>            
@@ -91,8 +92,11 @@ export default {
 .message-list {
   padding-left: 0;
   &__message {
-    &.own {
+    &.opponent {
       margin: 0 0 0 auto;
+      .content{
+        margin: 0 0 0 auto;
+      }
     }
     display: flex;
     width: 55%;
@@ -101,6 +105,7 @@ export default {
     }
     .content {
       margin-left: 10px;
+      max-width: calc(100% - 58px);
       &__name {
         
         }
@@ -108,6 +113,7 @@ export default {
         border: 1px solid #000;
         border-radius: 10px;
         padding: 10px;
+        word-wrap: break-word;
       }
     }
   }

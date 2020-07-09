@@ -11,12 +11,11 @@
       <div class="logout" @click="logout">ログアウト</div>
       <nuxt-link to="/signup/">新規登録</nuxt-link>
       <nuxt-link to="/login/">ログイン</nuxt-link>
-      <template v-if=currentUser.name>
         {{currentUser.name}}
-      </template>
       <v-avatar @click="OpenModalContents('isCurrentUserProfile')">
         <img
-          src="https://cdn.vuetifyjs.com/images/john.jpg"
+          v-if="currentUser.avator"
+          :src="currentUser.avator"
           alt="John"
         >
       </v-avatar>
