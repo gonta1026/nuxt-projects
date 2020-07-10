@@ -10,15 +10,14 @@ export default ({ req, route, redirect, store }) => {
     if (loginState){
         /* ログインしているのに "ログインと新規登録" に行ったらgroupページに戻す*/
       if (route.path === "/login/" || route.path === "/signup/") {
-        return redirect("/group/");
+        return redirect("/group/");//!!ここのコメントアウトを外すとエラーになる。
       }
       console.log("ログインしている",loginState)
     } else {
       console.log("ログインしていない", loginState)
-      //!!ここのコメントアウトを外すとエラーになる。
       /* ログインしていないのに "ログインと新規登録" 以外のページに行ったらloginページに戻す*/
       if (route.path !== "/login/" || route.path !== "/signup/") {
-        // return redirect("/login/");
+        // return redirect("/login/"); //!!ここのコメントアウトを外すとエラーになる。
       }
     }
     if (route.path === "/") {

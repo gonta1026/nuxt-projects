@@ -52,9 +52,9 @@
                     type="password"
                     v-model="user.password"
                   ></v-text-field>
-                  <v-row>
+                  <!-- <v-row>
                     <input @change="selectedFile" type="file" name="file">
-                  </v-row>
+                  </v-row> -->
                   <v-btn type="submit" color="primary">Sign up</v-btn>
                 </v-form>
               </v-card-text>
@@ -81,7 +81,7 @@ export default {
     user: {
       name: "",
       email: "",
-      avator: "",
+      // avator: "",
       password: "",
     }
   }),
@@ -100,9 +100,9 @@ export default {
     
     signUp(user){
       try {
-        const {name, email, avator, password} = user;
-        this.$store.dispatch('chat/signUp', {name, email, avator, password})
-        this.user.name = this.user.email = this.user.avator = this.user.password = '';
+        const {name, email, password} = user;//avatorを一旦除去
+        this.$store.dispatch('chat/signUp', {name, email, password})
+        this.user.name = this.user.email = this.user.password = '';
         this.$router.push('/login')
       } catch {
         console.log("新規登録に失敗しました！");

@@ -49,7 +49,7 @@ export const mutations = {
     state.currentUser.id = user.id
     state.currentUser.name = user.name
     state.currentUser.email = user.email
-    state.currentUser.avator = user.avator
+    // state.currentUser.avator = user.avator
   },
 
   setCurrentGroup(state, group){
@@ -84,13 +84,13 @@ export const actions = {
   async signUp({commit}, user){
     const fileName = uuid();
     // try {
-    const uploadTask = await firestorage.ref('images/' + fileName).put(user.avator);
-    const url = await uploadTask.ref.getDownloadURL();
+    // const uploadTask = await firestorage.ref('images/' + fileName).put(user.avator);
+    // const url = await uploadTask.ref.getDownloadURL();
     firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
     usersRef.add({
       name: user.name,
       email: user.email,
-      avator: url,
+      // avator: url,
       created: firebase.firestore.FieldValue.serverTimestamp()
     })
     // } catch {

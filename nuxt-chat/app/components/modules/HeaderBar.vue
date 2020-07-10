@@ -12,13 +12,13 @@
       <nuxt-link to="/signup/">新規登録</nuxt-link>
       <nuxt-link to="/login/">ログイン</nuxt-link>
         {{currentUser.name}}
-      <v-avatar @click="OpenModalContents('isCurrentUserProfile')">
+        <!-- @click="OpenModalContents('isCurrentUserProfile')" -->
+      <!-- <v-avatar v-if="currentUser">
         <img
-          v-if="currentUser.avator"
           :src="currentUser.avator"
-          alt="John"
+          alt=""
         >
-      </v-avatar>
+      </v-avatar> -->
     </v-toolbar-title>
   </v-app-bar>
 </template>
@@ -62,6 +62,6 @@ header {
 }
 
 .v-avatar {
-  cursor: pointer;
+  // cursor: pointer;
 }
 </style>

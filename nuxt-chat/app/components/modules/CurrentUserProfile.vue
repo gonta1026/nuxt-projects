@@ -18,9 +18,9 @@
             class="align-center justify-space-between"
             cols="12"
           >
-            <v-row>
+            <!-- <v-row>
                <input @change="selectedFile" type="file" name="file">
-            </v-row>
+            </v-row> -->
             <v-row
               align="center"
               class="mr-0"
@@ -71,7 +71,7 @@ import { mapMutations, mapGetters, mapActions } from 'vuex'
     data: () => ({
       user: {
         name: "",
-        avator: "",
+        // avator: "",
       }
     }),
 
@@ -83,7 +83,7 @@ import { mapMutations, mapGetters, mapActions } from 'vuex'
       selectedFile(e) {
         e.preventDefault();
         let files = e.target.files;
-        this.user.avator = files[0];
+        // this.user.avator = files[0];
       },
 
       updateUserProfile(user){
