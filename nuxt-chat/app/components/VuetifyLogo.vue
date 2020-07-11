@@ -1,4 +1,4 @@
-<template>
+igt<template>
   <img
     class="VuetifyLogo"
     alt="Vuetify Logo"

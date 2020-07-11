@@ -46,7 +46,7 @@
                   <v-btn type="submit" color="primary">Login</v-btn>
                 </v-form>
                 <!-- <nuxt-link to="/group/">グループにとぶ</nuxt-link> -->
-                <nuxt-link to="/signup/">新規登録のページはこちらです。</nuxt-link>
+                <nuxt-link to="/signup">新規登録のページはこちらです。</nuxt-link>
               </v-card-text>
             </v-card>
           </v-col>
@@ -72,22 +72,26 @@ export default {
       password: "",
     }
   }),
+
   mounted () {
     this.$refs.email.focus();
   },
+
   computed: {
   },
+
   methods: {
     login(user){
       const {email, password} = user;
       try {
         this.$store.dispatch('chat/login', {email, password})
         this.user.email = this.user.password = '';
-        this.$router.push('/group')
+        // this.$router.push('/group')
       } catch {
+        alert("失敗！")
         console.log("ログインに失敗しました！")
       }
-    },
+    }
   }
 }
 </script>

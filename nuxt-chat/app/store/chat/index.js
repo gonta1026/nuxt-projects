@@ -37,6 +37,7 @@ export const state = () => ({
 })
 
 export const getters = {
+  // currentUser: state => state.currentUser,
   currentUser: state => state.currentUser,
   currentGroup: state => state.currentGroup,
   modalActive: state => state.modalActive,
@@ -49,6 +50,13 @@ export const mutations = {
     state.currentUser.id = user.id
     state.currentUser.name = user.name
     state.currentUser.email = user.email
+    // state.currentUser.avator = user.avator
+  },
+  
+  unsetCurrentUser(state, user) {
+    state.currentUser.id = ""
+    state.currentUser.name = ""
+    state.currentUser.email = ""
     // state.currentUser.avator = user.avator
   },
 
@@ -83,38 +91,40 @@ export const actions = {
 
   async signUp({commit}, user){
     const fileName = uuid();
-    // try {
-    // const uploadTask = await firestorage.ref('images/' + fileName).put(user.avator);
-    // const url = await uploadTask.ref.getDownloadURL();
-    firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
-    usersRef.add({
-      name: user.name,
-      email: user.email,
-      // avator: url,
-      created: firebase.firestore.FieldValue.serverTimestamp()
-    })
-    // } catch {
-      // console.log("新規登録に失敗しました！");
-    // }
+    try {
+      // const uploadTask = await firestorage.ref('images/' + fileName).put(user.avator);
+      // const url = await uploadTask.ref.getDownloadURL();
+      const result = await firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
+      // console.log("結果は", result.user)
+      usersRef.add({
+        name: user.name,
+        email: user.email,
+        // avator: url,
+        created: firebase.firestore.FieldValue.serverTimestamp()
+      })
+      commit('setCurrentUser', user)
+    } catch {
+      console.log("新規登録に失敗しました！");
+      return false;
+    }
   },
 
   async login(context, user){
-    const result = await firebase.auth().signInWithEmailAndPassword(user.email, user.password);
-    const currentUser = _.find(context.state.users, user => user.email === result.user.email)
-    context.commit('setCurrentUser', currentUser)
-    cookies.set('login_now', 'login_now', {path: '/'});
+    try {
+      const result = await firebase.auth().signInWithEmailAndPassword(user.email, user.password);
+      const currentUser = _.find(context.state.users, user => user.email === result.user.email)
+      context.commit('setCurrentUser', currentUser)
+    } catch {
+      alert("ログインに失敗しました！");
+    }
   },
-  async logout() {
+
+  async logout({commit}) {
     await firebase.auth().signOut()
-    cookies.remove('login_now', {path: '/'});
+    commit('unsetCurrentUser')
     console.log("ログアウトした！")
   },
-  // logout({commit}) {
-  //   firebase.auth().signOut();
-  // },
-  setCurrentUser({commit}, user){
-    commit("setCurrentUser", user)
-  },
+
 
   addMessage: firestoreAction(({state}, {message, pass}) => {
     const messages = db.collection('groups').doc(pass).collection("messages");

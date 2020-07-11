@@ -35,7 +35,15 @@
               v-model="group.name"
               placeholder="Name"
             ></v-text-field>
+            <!-- <v-select :options="options" v-model="selected"/>-->
           </v-row>
+          <div>
+            <select class="user-list" v-model="selected" multiple>
+              <option>A</option>
+              <option>B</option>
+              <option>C</option>
+            </select>
+          </div>
         </v-col>
         
         <v-col cols="12">
@@ -61,8 +69,11 @@
       group: {
         name: "",
         description: ""
-      }
+      },
+      selected: null,
+      // options: ["React","Vue.js","Laravel",]
     }),
+    
     mounted () {
       this.$refs.name.focus();
     },
@@ -85,6 +96,10 @@
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   z-index: 10;
+}
+
+.user-list {
+  width: 100%;
 }
 
 </style>

@@ -26,13 +26,7 @@ export default {
   data: () => ({
     drawer: null,
   }),
-  created() {
-    firebase.auth().onAuthStateChanged((user)=> {
-      if (user) {
-        this.$store.dispatch("chat/setCurrentUser", user);
-      }
-    })
-  }
+
 }
 </script>
 

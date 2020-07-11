@@ -33,7 +33,7 @@
                     type="text"
                     v-model="user.name"
                   ></v-text-field>
-                  
+
                   <v-text-field
                     label="Email"
                     name="email"
@@ -57,6 +57,7 @@
                   </v-row> -->
                   <v-btn type="submit" color="primary">Sign up</v-btn>
                 </v-form>
+                <nuxt-link to="/login">ログインページはこちらです。</nuxt-link>
               </v-card-text>
             </v-card>
           </v-col>
@@ -103,11 +104,10 @@ export default {
         const {name, email, password} = user;//avatorを一旦除去
         this.$store.dispatch('chat/signUp', {name, email, password})
         this.user.name = this.user.email = this.user.password = '';
-        this.$router.push('/login')
       } catch {
         console.log("新規登録に失敗しました！");
       }
-    },
+    }
   }
 }
 </script>

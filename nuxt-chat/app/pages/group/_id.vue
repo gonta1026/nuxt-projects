@@ -23,7 +23,7 @@
           </li>
           <li class="message-list__message opponent">
             <div class="content">
-              <div class="content__detail">こっちはカレントユーザーのメッセージにしたい。</div>
+              <div class="content__detail">こっちは相手ユーザーのメッセージにしたい。</div>
             </div>            
           </li>
         </ul>
