@@ -7,6 +7,7 @@ export default ({ req, route, redirect, store }) => {
     console.log(user)
     // console.log(store.state.chat.currentUser.id)
     if (user) {
+      
       if (path.match(/login/) || path.match(/signup/) || path === "/") {
         console.log("グループへ")
         redirect("/group");

@@ -16,7 +16,7 @@
         <template>
             
         </template>
-        <nuxt-link :to="{ name: `group-id`, params: { id: group.id }}" v-for="group in orderdGroups" :key="group.id" @click.native="setCurrentGroup(group)">
+        <nuxt-link :to="{ name: `group-id`, params: { id: group.id }}" v-for="group in orderdGroups" :key="group.id" @click.native="setCurrentGroup(group)" class="group-list">
           <v-list-item>
             <v-list-item-content>
                 <v-list-item-title>{{group.name}}</v-list-item-title>
@@ -62,6 +62,11 @@ export default {
 
 .header-link {
   display: flex;
+}
+
+.group-list.nuxt-link-active {
+  display: block;
+  background: #ddd;
 }
 
 </style>

@@ -90,7 +90,6 @@ export default {
     this.$refs.name.focus();
   },
   computed: {
-    ...mapState("chat", ["users"])
   },
   methods: {
     selectedFile(e) {
@@ -101,7 +100,7 @@ export default {
     
     signUp(user){
       try {
-        const {name, email, password} = user;//avatorを一旦除去
+        const {name, email, password} = user;//!!avatorを一旦除去
         this.$store.dispatch('chat/signUp', {name, email, password})
         this.user.name = this.user.email = this.user.password = '';
       } catch {

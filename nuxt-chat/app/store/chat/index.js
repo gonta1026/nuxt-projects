@@ -8,7 +8,6 @@ const cookies = new Cookies();
 const firestorage = firebase.storage()
 
 const db = firebase.firestore();
-
 const usersRef = db.collection('users');
 const groupsRef = db.collection('groups');
 export const state = () => ({
@@ -37,7 +36,7 @@ export const state = () => ({
 })
 
 export const getters = {
-  // currentUser: state => state.currentUser,
+  users: state => state.users,
   currentUser: state => state.currentUser,
   currentGroup: state => state.currentGroup,
   modalActive: state => state.modalActive,
@@ -47,6 +46,13 @@ export const getters = {
 
 export const mutations = {
   setCurrentUser(state, user) {
+    state.currentUser.id = user.id
+    state.currentUser.name = user.name
+    state.currentUser.email = user.email
+    // state.currentUser.avator = user.avator
+  },
+  
+  setCurrentUserAtReload(state, user) {
     state.currentUser.id = user.id
     state.currentUser.name = user.name
     state.currentUser.email = user.email
@@ -109,11 +115,12 @@ export const actions = {
     }
   },
 
-  async login(context, user){
+  async login({state, commit}, user){
     try {
+      console.log(state.users);
       const result = await firebase.auth().signInWithEmailAndPassword(user.email, user.password);
-      const currentUser = _.find(context.state.users, user => user.email === result.user.email)
-      context.commit('setCurrentUser', currentUser)
+      const currentUser = _.find(state.users, user => user.email === result.user.email)
+      commit('setCurrentUser', currentUser)
     } catch {
       alert("ログインに失敗しました！");
     }
@@ -125,9 +132,33 @@ export const actions = {
     console.log("ログアウトした！")
   },
 
+  async setCurrentUser({commit, state}) { //!!本来はstateのusersを使って情報を取得したかったがobserverとしてしか取得ができなかったので直接firebaseから取得した。
+    firebase.auth().onAuthStateChanged((auth) => {
+      if (auth && state.currentUser.id === "") {
+        usersRef.get().then((querySnapshot) => {
+          querySnapshot.forEach((user) => {
+            if (user.data().email === auth.email){
+              const currentUser = {
+                id: user.id,
+                name: user.data().name,
+                email: user.data().email,
+                avator: user.data().avator
+              }
+              // console.log(currentUser)
+              commit('setCurrentUser', currentUser);
+              return
+            }
+          });
+        });
+      }
+    })
+  },
 
-  addMessage: firestoreAction(({state}, {message, pass}) => {
+
+  addMessage({state}, {message, pass}){
     const messages = db.collection('groups').doc(pass).collection("messages");
+    console.log(state.currentUser.id)
+    console.log(state.currentUser.name)
     messages.add({
       message: message,
       created: firebase.firestore.FieldValue.serverTimestamp(),
@@ -136,7 +167,7 @@ export const actions = {
         name: state.currentUser.name
       }
     })
-  }),
+  },
   addGroup: firestoreAction(({state}, group) => {
     groupsRef.add({
       name: group.name,
@@ -146,7 +177,7 @@ export const actions = {
       created: firebase.firestore.FieldValue.serverTimestamp()
     })
   }),
-  async updateUserProfile(context, avator){
+  async updateUserProfile(_, avator){
     const fileName = uuid();
     const uploadTask = await firestorage.ref('images/' + fileName).put(avator);
     const url = await uploadTask.ref.getDownloadURL();

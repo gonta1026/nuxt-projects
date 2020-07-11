@@ -8,25 +8,27 @@
       <v-container
       >
         <ul class="message-list">
-          <li v-for="message in orderdMessages" :key="message.id" class="message-list__message">
-            <v-avatar @click="OpenModalContents('isOtherUserProfile')" class="message-list__message--image">
-              <img
-                src="https://cdn.vuetifyjs.com/images/john.jpg"
-                alt="John"
-              >
-            </v-avatar>
-            
-            <div class="content">
-              <div class="content__name">{{message.user.name}}</div>
-              <div class="content__detail">{{message.message}}</div>
-            </div>            
-          </li>
-          <li class="message-list__message opponent">
+          <template v-for="message in orderdMessages">
+            <li class="message-list__message" :key="message.id" :class="{opponent: currentUser.name === message.user.name}">
+              <v-avatar v-if="!currentUser.id" @click="OpenModalContents('isOtherUserProfile')" class="message-list__message--image">
+                <img
+                  src="https://cdn.vuetifyjs.com/images/john.jpg"
+                  alt="John"
+                >
+              </v-avatar>
+              
+              <div class="content">
+                <div class="content__name">{{message.user.name}}</div>
+                <div class="content__detail">{{message.message}}</div>
+              </div>            
+            </li>
+          </template>
+        </ul>
+        <!-- <li class="message-list__message opponent">
             <div class="content">
               <div class="content__detail">こっちは相手ユーザーのメッセージにしたい。</div>
             </div>            
-          </li>
-        </ul>
+          </li> -->
       </v-container>
       <form @submit.prevent="addMessage({message, pass: $route.params.id})" class="new-message">
         <input
@@ -57,6 +59,7 @@ export default {
   },
 
   created(){
+    console.log("messagepageに")
     this.$store.dispatch("chat/initMessages", this.$route.params.id)
   },
 

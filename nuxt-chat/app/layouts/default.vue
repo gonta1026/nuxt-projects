@@ -5,17 +5,20 @@
 </template>
 
 <script>
+
+import firebase from '~/plugins/firebase'
+import { mapGetters } from 'vuex'
+
 export default {
   name: "default",
+
+  computed: {
+    ...mapGetters("chat", ["users"])
+  },
   created() {
   // if (this.todos){
     this.$store.dispatch('chat/init');    
-    // firebase.auth().onAuthStateChanged((user)=> {
-    //   if (user) {
-    //     // ログインしたときに実行するメソッド
-    //     this.$store.dispatch('todos/initUser', user);
-    //   }
-    // })
+    this.$store.dispatch('chat/setCurrentUser')    
     // }
   }
 }
