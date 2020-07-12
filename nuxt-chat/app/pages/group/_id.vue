@@ -7,7 +7,7 @@
     <v-content>
       <v-container
       >
-        <p v-if="groupDescription(page.id)">{{groupDescription(page.id).description}}</p>
+        <p v-if="groupDescription(page.id)">グループについての説明文：{{groupDescription(page.id).description}}</p>
         <ul class="message-list">
           <template v-for="message in orderdMessages">
             <li class="message-list__message" :key="message.id" :class="{opponent: currentUser.name === message.user.name}">
@@ -25,11 +25,13 @@
             </li>
           </template>
         </ul>
+        
         <!-- <li class="message-list__message opponent">
             <div class="content">
               <div class="content__detail">こっちは相手ユーザーのメッセージにしたい。</div>
             </div>            
           </li> -->
+
       </v-container>
       <form @submit.prevent="addMessage({message, pass: $route.params.id})" class="new-message">
         <input
@@ -60,30 +62,16 @@ export default {
     title: "message-post"
   },
 
-  // validate({params}) {
-  //   // return /^[0-9a-z]+$/.test(params.id)
-  // },
   asyncData ({ params }) {
     return { page: params }
   },
 
   data: () => ({
     message: "",
-    isActive: false,
-    // hoge: groupDescription(page.id)
-    // pageId: ""
   }),
-
-  watch: {
-    groupDescription: function(){
-      console.log("dd")
-      this.isActive = true
-    }
-  },
 
   created(){
     this.$store.dispatch("chat/initMessages", this.page.id)
-    // this.$store.dispatch("chat/groupMessage", this.page.id)
     this.pageId = this.$route.params.room_id
   },
 
@@ -186,9 +174,6 @@ export default {
     }
     .fa-image {
       background:#FBC02D;
-      // &:nth-of-type(n + 2){
-      //   margin-right: 10px;
-      // }
     }
   }
 }
