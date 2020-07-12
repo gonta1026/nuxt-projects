@@ -33,6 +33,7 @@ export const state = () => ({
     isCurrentUserProfile: false,
     isOtherUserProfile: false,
   },
+  num: 3
 })
 
 export const getters = {
@@ -41,7 +42,11 @@ export const getters = {
   currentGroup: state => state.currentGroup,
   modalActive: state => state.modalActive,
   orderdGroups: state => _.sortBy(state.groups, 'created'),
-  orderdMessages: state => _.sortBy(state.messages, 'created')
+  orderdMessages: state => _.sortBy(state.messages, 'created'),
+  groupDescription: (state) => (pageId) => {
+    const targetGroup = _.find(state.groups, group => group.id === pageId);
+    return targetGroup;
+  }
 };
 
 export const mutations = {
@@ -94,6 +99,11 @@ export const actions = {
     const messages = groupsRef.doc(pass).collection("messages");
     bindFirestoreRef('messages', messages)
   }), 
+
+  // groupMessage: firestoreAction(({ bindFirestoreRef }, pass) => {
+  //   const group = groupsRef.doc(pass)
+  //   console.log(group.get());
+  // }), 
 
   async signUp({commit}, user){
     const fileName = uuid();

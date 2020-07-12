@@ -7,6 +7,7 @@
     <v-content>
       <v-container
       >
+        <p v-if="groupDescription(page.id)">{{groupDescription(page.id).description}}</p>
         <ul class="message-list">
           <template v-for="message in orderdMessages">
             <li class="message-list__message" :key="message.id" :class="{opponent: currentUser.name === message.user.name}">
@@ -59,24 +60,45 @@ export default {
     title: "message-post"
   },
 
+  // validate({params}) {
+  //   // return /^[0-9a-z]+$/.test(params.id)
+  // },
+  asyncData ({ params }) {
+    return { page: params }
+  },
+
+  data: () => ({
+    message: "",
+    isActive: false,
+    // hoge: groupDescription(page.id)
+    // pageId: ""
+  }),
+
+  watch: {
+    groupDescription: function(){
+      console.log("dd")
+      this.isActive = true
+    }
+  },
+
   created(){
-    console.log("messagepageに")
-    this.$store.dispatch("chat/initMessages", this.$route.params.id)
+    this.$store.dispatch("chat/initMessages", this.page.id)
+    // this.$store.dispatch("chat/groupMessage", this.page.id)
+    this.pageId = this.$route.params.room_id
   },
 
   mounted () {
     this.$refs.message.focus();
   },
 
-  data: () => ({
-    message: "",
-  }),
-
   computed: {
-    ...mapGetters("chat", ["orderdMessages", "currentUser"])
+    ...mapGetters("chat", ["orderdMessages", "currentUser", "groupDescription"])
   },
   
   methods: {
+    hoge(){
+      this.isActive = !this.isActive;
+    },
     ...mapMutations("chat", ["OpenModalContents"]),
 
     addMessage(messageAndPass){
