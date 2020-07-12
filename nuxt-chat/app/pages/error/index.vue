@@ -10,7 +10,8 @@ export default {
   head: {
     bodyAttrs: {
       class: 'error'
-    }
+    },
+    title: "error"
   }
 }
 </script>

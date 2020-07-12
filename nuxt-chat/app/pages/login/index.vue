@@ -61,10 +61,14 @@
 import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
-  head: {
+
+  head: {    
+    // nuxt.config.jsの%sに反映される内容
+    title: 'タイトルタグのテストページ',
     bodyAttrs: {
       class: 'login'
-    }
+    },
+    title: "login"
   },
   data: () => ({
     user: {

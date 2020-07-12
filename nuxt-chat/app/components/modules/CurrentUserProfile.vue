@@ -82,7 +82,7 @@ import { mapMutations, mapGetters, mapActions } from 'vuex'
     methods: {
       selectedFile(e) {
         e.preventDefault();
-        let files = e.target.files;
+        const files = e.target.files;
         // this.user.avator = files[0];
       },
 

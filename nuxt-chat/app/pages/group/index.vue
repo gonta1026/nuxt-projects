@@ -20,7 +20,8 @@ export default {
   head: {
     bodyAttrs: {
       class: 'group'
-    }
+    },
+    title: "group-top"
   },
   // name: "group",
   data: () => ({

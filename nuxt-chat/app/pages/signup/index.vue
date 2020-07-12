@@ -76,7 +76,8 @@ export default {
   head: {
     bodyAttrs: {
       class: 'signup'
-    }
+    },
+    title: "signup"
   },
   data: () => ({
     user: {

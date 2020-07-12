@@ -55,7 +55,8 @@ export default {
   head: {
     bodyAttrs: {
       class: 'group-show'
-    }
+    },
+    title: "message-post"
   },
 
   created(){

@@ -38,11 +38,11 @@
             <!-- <v-select :options="options" v-model="selected"/>-->
           </v-row>
           <div>
-            <select class="user-list" v-model="selected" multiple>
+            <!-- <select class="user-list" v-model="selected" multiple>
               <option>A</option>
               <option>B</option>
               <option>C</option>
-            </select>
+            </select> -->
           </div>
         </v-col>
         
