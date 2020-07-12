@@ -11,7 +11,7 @@ groups:
   documentID: auto
     name: String
     description: String
-    userId: map
+    userIds: map
       messages: subCollection
         documentID: auto
           message: String

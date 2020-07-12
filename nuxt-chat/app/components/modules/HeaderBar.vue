@@ -8,11 +8,13 @@
     <v-app-bar-nav-icon @click="change"></v-app-bar-nav-icon>
     <v-toolbar-title class="toolbar">
       <h2 v-if="$route.name == 'group-id'">{{currentGroup.name}}</h2>
+      <!-- <p>{{currentGroup.name}}</p> -->
       <!-- <template v-if="!currentUser">         
         <nuxt-link to="/signup/">新規登録</nuxt-link>
         <nuxt-link to="/login/">ログイン</nuxt-link>
       </template> -->
       <div class="right">
+        <nuxt-link to="/group">グループトップ</nuxt-link>
         <div class="logout" @click="logout">ログアウト</div>
         <div class="user">{{currentUser.name}}</div>
       </div>
@@ -63,7 +65,7 @@ header {
   display: flex;
   .right {
     display: flex;
-    width: 180px;
+    min-width: 330px;
     margin: 0 0 0 auto;
     justify-content: space-between;
   }
@@ -71,7 +73,4 @@ header {
   // align-items: center;
 }
 
-.v-avatar {
-  // cursor: pointer;
-}
 </style>

@@ -14,7 +14,8 @@ export const state = () => ({
   groups: [],
   users: [],
   messages: [],
-
+  notBelongsGroups: [],
+  
   currentUser: {
     id: "",
     name: "",
@@ -183,10 +184,18 @@ export const actions = {
       name: group.name,
       description: group.description,
       // userId: state.currentUser.id,
-      userId: [state.currentUser.id],
+      userIds: [state.currentUser.id],
       created: firebase.firestore.FieldValue.serverTimestamp()
     })
   }),
+  
+  entryGroup: firestoreAction(({state}, ids) => {
+    const entryGroup = db.collection('groups').doc(ids.groupId);
+    entryGroup.update({
+      userIds: firebase.firestore.FieldValue.arrayUnion(ids.currentUserId)
+    });
+  }),
+
   async updateUserProfile(_, avator){
     const fileName = uuid();
     const uploadTask = await firestorage.ref('images/' + fileName).put(avator);

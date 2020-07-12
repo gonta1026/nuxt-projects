@@ -13,9 +13,6 @@
         </v-list-item-content>
       </v-list-item>
       <template v-if="orderdGroups.length">
-        <template>
-            
-        </template>
         <nuxt-link :to="{ name: `group-id`, params: { id: group.id }}" v-for="group in orderdGroups" :key="group.id" @click.native="setCurrentGroup(group)" class="group-list">
           <v-list-item>
             <v-list-item-content>
