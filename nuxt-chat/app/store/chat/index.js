@@ -14,7 +14,6 @@ export const state = () => ({
   groups: [],
   users: [],
   messages: [],
-  notBelongsGroups: [],
   
   currentUser: {
     id: "",
@@ -47,7 +46,13 @@ export const getters = {
   groupDescription: (state) => (pageId) => {
     const targetGroup = _.find(state.groups, group => group.id === pageId);
     return targetGroup;
-  }
+  },
+  orderdMessages: state => _.sortBy(state.messages, 'created'),
+  notBelongsGroups: state => state.groups.filter((group)=>{
+    if (!group.userIds.includes(state.currentUser.id)){
+      return group 
+    }
+  }) 
 };
 
 export const mutations = {

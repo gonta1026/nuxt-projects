@@ -7,24 +7,14 @@
     <v-content>
       <v-container
       >
-        <!-- <div class="belongs">
-          <p class="belongs__detail">あなたが所属しているグループです</p>
-          <ul class="belongs__detail--list">
-            <li v-for="group in belongsGroups" :key="group.id">
-              <nuxt-link :to="{ name: `group-id`, params: { id: group.id }}">{{group.name}}</nuxt-link>
-            </li>
-          </ul>
-        </div> -->
         <div class="belongs not">
           <p class="belongs__detail">あなたが所属していないグループです！ぜひ入ってみましょう！</p>
           <ul class="belongs__detail--list">
-            {{notBelongsGroups}}
             <li v-for="group in notBelongsGroups" :key="group.id" @click="entryGroup(group.id, currentUser.id)">
               <a>{{group.name}}</a>
             </li>
           </ul>
         </div>
-        <!-- {{groups}} -->
       </v-container>
     </v-content>
   </v-app>
@@ -48,31 +38,7 @@ export default {
   }),
 
   computed: {
-    ...mapGetters("chat", ["orderdGroups", "currentUser"]),
-    // belongsGroups(){
-    //   return this.orderdGroups.filter( group => group.userIds.filter( userId => userId === this.currentUser.id))
-    // },
-    // notBelongsGroups(){//!!filterがうまくできなかったためgroupsのdataを使ってgroup一覧を表示した。
-    //   return this.orderdGroups.forEach( group => group.userIds.filter( userId => userId !== this.currentUser.id))
-    // }
-    notBelongsGroups(){
-      return this.orderdGroups.forEach((group)=> {
-        if (!group.userIds.includes(this.currentUser.id )){
-          console.log(group.name + "には"　+ this.currentUser.id + "含まれていない");
-          // this.groups.push(group)
-          return group
-        }
-        // return group.userIds.includes((userId) => {
-        //   if (userId !== this.currentUser.id){
-        //     console.log(group.name)
-        //     console.log(userId)
-        //     console.log(this.currentUser.id)
-        //     this.groups.push(group);
-        //   }
-        // })
-      })
-      // return this.orderdGroups.filter( group => group.userIds.filter( userId => userId !== this.currentUser.id))
-    }
+    ...mapGetters("chat", ["orderdGroups", "currentUser", "notBelongsGroups"]),
   },
 
   methods: {
