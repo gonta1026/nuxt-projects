@@ -48,11 +48,16 @@ export const getters = {
     return targetGroup;
   },
   orderdMessages: state => _.sortBy(state.messages, 'created'),
-  notBelongsGroups: state => state.groups.filter((group)=>{
+  notBelongsGroups: state => _.filter(state.groups, group=>{
     if (!group.userIds.includes(state.currentUser.id)){
       return group 
     }
-  }) 
+  }),
+  belongsGroups: state => _.filter(state.groups, group=>{
+    if (group.userIds.includes(state.currentUser.id)){
+      return group 
+    }
+  }),
 };
 
 export const mutations = {
