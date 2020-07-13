@@ -8,23 +8,11 @@
     <v-app-bar-nav-icon @click="change"></v-app-bar-nav-icon>
     <v-toolbar-title class="toolbar">
       <h2 v-if="$route.name == 'group-id'">{{currentGroup.name}}</h2>
-      <!-- <p>{{currentGroup.name}}</p> -->
-      <!-- <template v-if="!currentUser">         
-        <nuxt-link to="/signup/">新規登録</nuxt-link>
-        <nuxt-link to="/login/">ログイン</nuxt-link>
-      </template> -->
       <div class="right">
         <nuxt-link to="/group">グループトップ</nuxt-link>
         <div class="logout" @click="logout">ログアウト</div>
         <div class="user">{{currentUser.name}}</div>
       </div>
-        <!-- @click="OpenModalContents('isCurrentUserProfile')" -->
-      <!-- <v-avatar v-if="currentUser">
-        <img
-          :src="currentUser.avator"
-          alt=""
-        >
-      </v-avatar> -->
     </v-toolbar-title>
   </v-app-bar>
 </template>
@@ -56,21 +44,28 @@ export default {
 
 <style lang="scss" scoped>
 
+
 header {
   height: 0;
+  .toolbar {
+    width: 100%;
+    display: flex;
+    .right {
+      display: flex;
+      min-width: 330px;
+      margin: 0 0 0 auto;
+      justify-content: space-between;
+    }
+  }
 }
 
-.toolbar {
-  width: 100%;
-  display: flex;
-  .right {
-    display: flex;
-    min-width: 330px;
-    margin: 0 0 0 auto;
-    justify-content: space-between;
+@media screen and (max-width: 750px) {
+  header {
+    .toolbar {
+      padding: 0;
+    }
   }
-  // justify-content: space-between;
-  // align-items: center;
 }
+
 
 </style>

@@ -72,8 +72,7 @@ export default {
 
   created(){
     this.$store.dispatch("chat/initMessages", this.page.id)
-    // console.log(this.page.id)
-    // this.pageId = this.$route.params.room_id
+    this.$store.dispatch("chat/setCurrentGroup", this.page.id)
   },
 
   mounted () {

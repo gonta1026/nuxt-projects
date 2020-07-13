@@ -87,6 +87,13 @@ export const mutations = {
     state.currentGroup.name = group.name
   },
 
+  reloadSetCurrentGroup(state, groupId){
+    console.log(state.groups);
+    // state.groups
+    // state.currentGroup.id = group.id
+    // state.currentGroup.name = group.name
+  },
+
   modalClose(state) {
       state.modalActive.isMaskActive
     = state.modalActive.isGroupNewFrom
@@ -153,7 +160,7 @@ export const actions = {
     console.log("ログアウトした！")
   },
 
-  async setCurrentUser({commit, state}) { //!!本来はstateのusersを使って情報を取得したかったがobserverとしてしか取得ができなかったので直接firebaseから取得した。
+  setCurrentUser({commit, state}) { //!!本来はstateのusersを使って情報を取得したかったがobserverとしてしか取得ができなかったので直接firebaseから取得した。
     firebase.auth().onAuthStateChanged((auth) => {
       if (auth && state.currentUser.id === "") {
         usersRef.get().then((querySnapshot) => {
@@ -165,16 +172,32 @@ export const actions = {
                 email: user.data().email,
                 avator: user.data().avator
               }
-              // console.log(currentUser)
               commit('setCurrentUser', currentUser);
-              return
             }
+            return;
           });
         });
       }
     })
   },
 
+  setCurrentGroup({commit, state}, pageId) { //!!firestoreにコレクションとして持たせてもよいかも。
+    if (state.currentGroup.id === "") {
+      groupsRef.get().then((querySnapshot) => {
+        querySnapshot.forEach((group) => {
+          if (group.id === pageId) {
+            const currentGroup = {
+              id: group.id,
+              name: group.data().name,
+            };
+            commit("setCurrentGroup", currentGroup
+            );
+          }
+          return;
+        });
+      });
+    }
+  },
 
   addMessage({state}, {message, pass}){
     const messages = db.collection('groups').doc(pass).collection("messages");
@@ -189,6 +212,7 @@ export const actions = {
       }
     })
   },
+
   addGroup: firestoreAction(({state}, group) => {
     groupsRef.add({
       name: group.name,
