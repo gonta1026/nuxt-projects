@@ -47,6 +47,7 @@ export default {
   plugins: [
     '~plugins/ui',
     '~plugins/firebase',
+    '~/plugins/filter.js'
   ],
   /*
   ** Nuxt.js dev-modules

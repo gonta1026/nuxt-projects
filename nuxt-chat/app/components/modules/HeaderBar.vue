@@ -9,9 +9,8 @@
     <v-toolbar-title class="toolbar">
       <h2 v-if="$route.name == 'group-id'">{{currentGroup.name}}</h2>
       <div class="right">
-        <nuxt-link to="/group">グループトップ</nuxt-link>
         <div class="logout" @click="logout">ログアウト</div>
-        <div class="user">{{currentUser.name}}</div>
+        <div class="user">{{currentUser.name | truncate(5,'...')}}</div>
       </div>
     </v-toolbar-title>
   </v-app-bar>
@@ -52,7 +51,7 @@ header {
     display: flex;
     .right {
       display: flex;
-      min-width: 330px;
+      min-width: 260px;
       margin: 0 0 0 auto;
       justify-content: space-between;
     }

@@ -35,14 +35,19 @@
               v-model="group.name"
               placeholder="Name"
             ></v-text-field>
-            <!-- <v-select :options="options" v-model="selected"/>-->
           </v-row>
           <div>
-            <!-- <select class="user-list" v-model="selected" multiple>
-              <option>A</option>
-              <option>B</option>
-              <option>C</option>
-            </select> -->
+   　　　　  <v-col cols="12" sm="6">
+             <v-select
+              v-model="selectedPlan"
+              item-text="label"
+              item-value="value"
+              :items="plans"
+              label="旅行プラン"
+              multiple
+              >
+              </v-select>
+            </v-col>
           </div>
         </v-col>
         
@@ -70,8 +75,13 @@
         name: "",
         description: ""
       },
-      selected: null,
-      // options: ["React","Vue.js","Laravel",]
+       // 最初はドイツを選択済にする
+      selectedPlan: "",
+      plans: [
+        { label: 'ドイツ'   , value: 'germany'  },
+        { label: 'スペイン' , value: 'spain'    },
+        { label: 'フランス' , value: 'france'   },
+      ],
     }),
     
     mounted () {
@@ -100,6 +110,9 @@
 
 .user-list {
   width: 100%;
+}
+
+.v-menu__content {
 }
 
 </style>

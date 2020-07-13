@@ -33,6 +33,6 @@ export default {
   transition: inherit;
   width: 100%;
   will-change: opacity;
-  z-index: 100;
+  z-index: 9;
 }
 </style>

@@ -7,13 +7,17 @@
     <v-content>
       <v-container
       >
-        <div class="belongs not">
+        <div v-if="notBelongsGroups.length" class="belongs not">
           <p class="belongs__detail">あなたが所属していないグループです！ぜひ入ってみましょう！</p>
           <ul class="belongs__detail--list">
             <li v-for="group in notBelongsGroups" :key="group.id" @click="entryGroup(group.id, currentUser.id)">
               <a>{{group.name}}</a>
+                 <!-- <p>{{ "TEXT" | toLowercase }}</p> -->
             </li>
           </ul>
+        </div>
+        <div v-else class="hoge">
+          <p class="belongs__detail">あなたが所属していないグループはありません！よければ新しく作ってみましょう！</p>
         </div>
       </v-container>
     </v-content>
