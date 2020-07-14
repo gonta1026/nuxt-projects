@@ -91,13 +91,6 @@ export const mutations = {
     state.currentGroup.name = group.name
   },
 
-  reloadSetCurrentGroup(state, groupId){
-    console.log(state.groups);
-    // state.groups
-    // state.currentGroup.id = group.id
-    // state.currentGroup.name = group.name
-  },
-
   modalClose(state) {
       state.modalActive.isMaskActive
     = state.modalActive.isGroupNewFrom
@@ -121,11 +114,6 @@ export const actions = {
     const messages = groupsRef.doc(pass).collection("messages");
     bindFirestoreRef('messages', messages)
   }), 
-
-  // groupMessage: firestoreAction(({ bindFirestoreRef }, pass) => {
-  //   const group = groupsRef.doc(pass)
-  //   console.log(group.get());
-  // }), 
 
   async signUp({commit}, user){
     const fileName = uuid();
