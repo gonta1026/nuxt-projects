@@ -45,7 +45,19 @@ export const getters = {
   addUserList: state => _.filter(state.users, user => {
     return user.id !== state.currentUser.id
   }),
-  groupDescription: (state) => (pageId) => {
+  targetGroup: (state) => (pageId) => {
+    const targetGroup = _.find(state.groups, group => group.id === pageId);
+    return targetGroup;
+  },
+  belongsUsers: (state, getters) => (pageId) => {
+    const targetUsers = _.filter(state.users, user => {
+      if (getters.targetGroup(pageId).userIds.includes(user.id)) {
+        return user
+      }
+    })
+    return targetUsers;
+  },
+  targetGroup: (state) => (pageId) => {
     const targetGroup = _.find(state.groups, group => group.id === pageId);
     return targetGroup;
   },
@@ -232,9 +244,9 @@ export const actions = {
     });
   }),
 
-  async updateUserProfile(_, avator){
-    const fileName = uuid();
-    const uploadTask = await firestorage.ref('images/' + fileName).put(avator);
-    const url = await uploadTask.ref.getDownloadURL();
-  },
+  // async updateUserProfile(_, avator){
+  //   const fileName = uuid();
+  //   const uploadTask = await firestorage.ref('images/' + fileName).put(avator);
+  //   const url = await uploadTask.ref.getDownloadURL();
+  // },
 }

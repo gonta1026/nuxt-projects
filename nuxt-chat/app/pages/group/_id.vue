@@ -7,7 +7,12 @@
     <v-content>
       <v-container
       >
-        <p v-if="groupDescription(page.id)">グループについての説明文：{{groupDescription(page.id).description}}</p>
+        <template v-if="targetGroup(page.id)">
+          <p>グループについての説明文：{{targetGroup(page.id).description}}</p>
+          <div class="users">
+            参加ユーザー：<span v-for="user in belongsUsers(page.id)" :key='user.id'>{{user.name}}、</span>
+          </div>
+        </template>
         <ul class="message-list">
           <template v-for="message in orderdMessages">
             <li class="message-list__message" :key="message.id" :class="{opponent: currentUser.name === message.user.name}">
@@ -80,7 +85,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters("chat", ["orderdMessages", "currentUser", "groupDescription"])
+    ...mapGetters("chat", ["orderdMessages", "currentUser", "targetGroup", "belongsUsers"])
   },
   
   methods: {
