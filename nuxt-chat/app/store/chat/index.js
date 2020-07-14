@@ -42,24 +42,14 @@ export const getters = {
   modalActive: state => state.modalActive,
   orderdGroups: state => _.sortBy(state.groups, 'created'),
   orderdMessages: state => _.sortBy(state.messages, 'created'),
-  addUserList: state => _.filter(state.users, user => {
-    return user.id !== state.currentUser.id
-  }),
-  targetGroup: (state) => (pageId) => {
-    const targetGroup = _.find(state.groups, group => group.id === pageId);
-    return targetGroup;
-  },
+  addUserList: state => _.filter(state.users, user => user.id !== state.currentUser.id),
+  targetGroup: (state) => (pageId) =>  _.find(state.groups, group => group.id === pageId),
   belongsUsers: (state, getters) => (pageId) => {
-    const targetUsers = _.filter(state.users, user => {
+    return _.filter(state.users, user => {
       if (getters.targetGroup(pageId).userIds.includes(user.id)) {
         return user
       }
     })
-    return targetUsers;
-  },
-  targetGroup: (state) => (pageId) => {
-    const targetGroup = _.find(state.groups, group => group.id === pageId);
-    return targetGroup;
   },
   orderdMessages: state => _.sortBy(state.messages, 'created'),
   notBelongsGroups: state => _.filter(state.groups, group=>{
