@@ -33,7 +33,6 @@ export const state = () => ({
     isCurrentUserProfile: false,
     isOtherUserProfile: false,
   },
-  num: 3
 })
 
 export const getters = {
@@ -43,6 +42,9 @@ export const getters = {
   modalActive: state => state.modalActive,
   orderdGroups: state => _.sortBy(state.groups, 'created'),
   orderdMessages: state => _.sortBy(state.messages, 'created'),
+  addUserList: state => _.filter(state.users, user => {
+    return user.id !== state.currentUser.id
+  }),
   groupDescription: (state) => (pageId) => {
     const targetGroup = _.find(state.groups, group => group.id === pageId);
     return targetGroup;
@@ -218,7 +220,7 @@ export const actions = {
       name: group.name,
       description: group.description,
       // userId: state.currentUser.id,
-      userIds: [state.currentUser.id],
+      userIds: [state.currentUser.id, ...group.selectedUsers],
       created: firebase.firestore.FieldValue.serverTimestamp()
     })
   }),

@@ -5,15 +5,18 @@ users:
     name: String
     email: String
     avatorURL: String?
-    groupId: map
+    groupId: Arr
 
 groups:
   documentID: auto
     name: String
     description: String
-    userIds: map
+    userIds: Arr
       messages: subCollection
         documentID: auto
           message: String
           imgae: String?
-          userId: refs
+          user: 
+            id: String
+            name: String
+          

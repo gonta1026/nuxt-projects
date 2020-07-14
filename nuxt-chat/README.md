@@ -1,22 +1,19 @@
 # nuxt-chat
 
-> My well-made Nuxt.js project
+## 機能一覧
 
-## Build Setup
+- ユーザーの新規登録（Firebase Authentication）
+- ユーザーのログイン(Firebase Authentication)
+- グループ新規登録
+- メッセージ投稿
+- グループへの参加機能
 
-```bash
-# install dependencies
-$ npm install
+## バージョン等
+- @nuxt/cli v2.12.2
+- firebase 8.4.1
+- node v12.6.0
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+## 使用ライブラリ
+- lodash
 
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
-```
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+## firestoreの構造はschema.ymlを参照

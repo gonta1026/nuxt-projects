@@ -9,7 +9,7 @@
     <v-toolbar-title class="toolbar">
       <h2 v-if="$route.name == 'group-id'">{{currentGroup.name}}</h2>
       <div class="right">
-        <div class="logout" @click="logout">ログアウト</div>
+        <div class="logout" @click="logout">Logout</div>
         <div class="user">{{currentUser.name | truncate(5,'...')}}</div>
       </div>
     </v-toolbar-title>

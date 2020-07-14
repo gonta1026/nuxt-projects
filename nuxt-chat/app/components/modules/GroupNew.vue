@@ -11,53 +11,40 @@
       >
       Create group
     </v-card-title>
-    <v-form @submit.prevent="addGroup(group)">
+    <v-form @submit.prevent="addGroup(group)" class="form">
       <v-row class="mx-2">
         <v-col
           class="align-center justify-space-between"
-          cols="12"
         >
           <v-row
+            cols="12"
             align="center"
-            class="mr-0"
+            class="form__name"
           >
-            <v-avatar
-              size="40px"
-              class="mx-3"
-            >
-              <img
-                src="//ssl.gstatic.com/s2/oz/images/sge/grey_silhouette.png"
-                alt=""
-              >
-            </v-avatar>
             <v-text-field
               ref="name"
               v-model="group.name"
               placeholder="Name"
             ></v-text-field>
           </v-row>
-          <div>
-   　　　　  <v-col cols="12" sm="6">
+          <v-row cols="12" class="form__users">
              <v-select
-              v-model="selectedPlan"
-              item-text="label"
-              item-value="value"
-              :items="plans"
-              label="旅行プラン"
+              v-model="group.selectedUsers"
+              item-text="name"
+              item-value="id"
+              :items="addUserList"
+              label="users"
               multiple
               >
               </v-select>
-            </v-col>
-          </div>
+          </v-row>
         </v-col>
-        
-        <v-col cols="12">
+        <v-row class="form__description">
           <v-text-field
             v-model="group.description"
-            prepend-icon="mdi-text"
             placeholder="Description"
           ></v-text-field>
-        </v-col>
+        </v-row>
       </v-row>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -69,28 +56,32 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
   export default {
     data: () => ({
       group: {
         name: "",
-        description: ""
+        description: "",
+        // 最初はドイツを選択済にする
+        selectedUsers: ""
       },
-       // 最初はドイツを選択済にする
-      selectedPlan: "",
-      plans: [
-        { label: 'ドイツ'   , value: 'germany'  },
-        { label: 'スペイン' , value: 'spain'    },
-        { label: 'フランス' , value: 'france'   },
-      ],
+
     }),
     
     mounted () {
       this.$refs.name.focus();
     },
+
+    computed: {
+      ...mapGetters("chat", ["addUserList"])
+    },
     methods: {
       addGroup(group){
-        const {name, description} = group;
-        this.$store.dispatch("chat/addGroup", {name, description});
+        const {name, description, selectedUsers} = group;
+        console.log(name)
+        console.log(selectedUsers)
+        this.$store.dispatch("chat/addGroup", {name, description, selectedUsers});
         this.$store.commit("chat/modalClose");
       }
     }
@@ -106,13 +97,14 @@
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   z-index: 10;
+  .form {
+    &__description {
+      width: 100%;
+      margin: 0 auto;
+    }
+
+  }
 }
 
-.user-list {
-  width: 100%;
-}
-
-.v-menu__content {
-}
 
 </style>
