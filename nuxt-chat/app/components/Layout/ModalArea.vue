@@ -3,6 +3,7 @@
     <GroupNew v-if="modalActive.isGroupNewFrom"/>  
     <CurrentUserProfile v-if="modalActive.isCurrentUserProfile"/>
     <OtherUserProfile v-if="modalActive.isOtherUserProfile"/>
+    <AddUserToGroup v-if="modalActive.isAddUserToGroup"/>
   </div>
 </template>
 

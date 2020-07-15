@@ -32,6 +32,7 @@ export const state = () => ({
     isGroupNewFrom: false,
     isCurrentUserProfile: false,
     isOtherUserProfile: false,
+    isAddUserToGroup: false,
   },
 })
 
@@ -43,7 +44,14 @@ export const getters = {
   orderdGroups: state => _.sortBy(state.groups, 'created'),
   orderdMessages: state => _.sortBy(state.messages, 'created'),
   addUserList: state => _.filter(state.users, user => user.id !== state.currentUser.id),
-  targetGroup: (state) => (pageId) =>  _.find(state.groups, group => group.id === pageId),
+  targetGroup: state =>　pageId =>  _.find(state.groups, group => group.id === pageId),
+  notBelongsUsers: (state, getters) => (pageId) => {
+    return _.filter(state.users, user => {
+      if (!getters.targetGroup(pageId).userIds.includes(user.id)) {
+        return user
+      }
+    })
+  },
   belongsUsers: (state, getters) => (pageId) => {
     return _.filter(state.users, user => {
       if (getters.targetGroup(pageId).userIds.includes(user.id)) {
@@ -72,13 +80,6 @@ export const mutations = {
     // state.currentUser.avator = user.avator
   },
   
-  setCurrentUserAtReload(state, user) {
-    state.currentUser.id = user.id
-    state.currentUser.name = user.name
-    state.currentUser.email = user.email
-    // state.currentUser.avator = user.avator
-  },
-  
   unsetCurrentUser(state, user) {
     state.currentUser.id = ""
     state.currentUser.name = ""
@@ -95,7 +96,8 @@ export const mutations = {
       state.modalActive.isMaskActive
     = state.modalActive.isGroupNewFrom
     = state.modalActive.isCurrentUserProfile
-    = state.modalActive.isOtherUserProfile = false
+    = state.modalActive.isOtherUserProfile
+    = state.modalActive.isAddUserToGroup = false
   },
 
   OpenModalContents(state, content) {
@@ -128,7 +130,12 @@ export const actions = {
         // avator: url,
         created: firebase.firestore.FieldValue.serverTimestamp()
       })
-      commit('setCurrentUser', user)
+      const currentUser = {
+        id: firebase.auth().currentUser.uid,
+        name: user.name,
+        email: user.email
+      };
+      commit("setCurrentUser", currentUser);
     } catch {
       console.log("新規登録に失敗しました！");
       return false;
@@ -206,6 +213,10 @@ export const actions = {
   },
 
   addGroup: firestoreAction(({state}, group) => {
+    console.log(group.name);
+    console.log(group.description);
+    console.log(group.selectedUsers);
+    console.log(state.currentUser.id);
     groupsRef.add({
       name: group.name,
       description: group.description,
@@ -215,10 +226,17 @@ export const actions = {
     })
   }),
   
-  entryGroup: firestoreAction(({state}, ids) => {
-    const entryGroup = db.collection('groups').doc(ids.groupId);
+  entryGroup: firestoreAction(({state}, {groupId, currentUserId}) => {
+    const entryGroup = db.collection('groups').doc(groupId);
     entryGroup.update({
-      userIds: firebase.firestore.FieldValue.arrayUnion(ids.currentUserId)
+      userIds: firebase.firestore.FieldValue.arrayUnion(currentUserId)
+    });
+  }),
+  
+  addUserToGroup: firestoreAction(({state}, {users, groupId}) => {
+    const entryGroup = groupsRef.doc(groupId);
+    entryGroup.update({
+      userIds: firebase.firestore.FieldValue.arrayUnion(...users)
     });
   }),
 

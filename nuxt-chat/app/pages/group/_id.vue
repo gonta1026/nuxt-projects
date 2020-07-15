@@ -7,10 +7,10 @@
     <v-content>
       <v-container
       >
-        <template v-if="targetGroup(page.id)">
-          <p>グループについての説明文：{{targetGroup(page.id).description}}</p>
+        <template v-if="targetGroup($route.params.id)">
+          <p>グループについての説明文：{{targetGroup($route.params.id).description}}</p>
           <div class="users">
-            参加ユーザー：<span v-for="user in belongsUsers(page.id)" :key='user.id'>{{user.name}}、</span>
+            参加ユーザー：<span v-for="user in belongsUsers($route.params.id)" :key='user.id'>{{user.name}}、</span>
           </div>
         </template>
         <ul class="message-list">
@@ -47,8 +47,6 @@
           placeholder="message">
         <div class="new-message__btns">
           <v-btn class="btn" type="submit"><v-icon>fas fa-reply</v-icon></v-btn>
-          
-          <!-- <v-icon>fa-image</v-icon> -->
         </div>
       </form>
     </v-content>
@@ -85,7 +83,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters("chat", ["orderdMessages", "currentUser", "targetGroup", "belongsUsers"])
+    ...mapGetters("chat", ["orderdMessages", "currentUser", "targetGroup", "belongsUsers", "notBelongsUsers"])
   },
   
   methods: {

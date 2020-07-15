@@ -7,19 +7,21 @@ import HeaderBar from '~/components/modules/HeaderBar'
 import NavigationDrawer from '~/components/modules/NavigationDrawer'
 import GroupNew from '~/components/modules/GroupNew'
 import OtherUserProfile from '~/components/modules/OtherUserProfile'
+import AddUserToGroup from '~/components/modules/AddUserToGroup'
 import CurrentUserProfile from '~/components/modules/CurrentUserProfile'
 
 Vue.mixin({
   components: {
-    //以下はmodules
+    //以下はLayout用
     PageHeader,
+    ModalArea,
+    //以下はmodules
     HeaderBar,
     NavigationDrawer,
     GroupNew,
     OtherUserProfile,
     CurrentUserProfile,
-    // 以下はatoms用
-    ModalArea,
+    AddUserToGroup
   },
 })
 

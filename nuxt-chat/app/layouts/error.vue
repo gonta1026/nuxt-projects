@@ -4,7 +4,7 @@
 </template>
 
 <script>
-console.log("ここはエラーページです")
+// console.log("ここはエラーページです")
 export default {
   layout: 'empty',
   props: {

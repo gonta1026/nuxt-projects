@@ -79,8 +79,10 @@ import { mapGetters } from 'vuex'
     methods: {
       addGroup(group){
         const {name, description, selectedUsers} = group;
-        console.log(name)
-        console.log(selectedUsers)
+        // console.log(name)
+        // console.log(description)
+        // console.log(selectedUsers)
+        // console.log(group);
         this.$store.dispatch("chat/addGroup", {name, description, selectedUsers});
         this.$store.commit("chat/modalClose");
       }
