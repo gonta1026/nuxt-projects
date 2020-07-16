@@ -16,7 +16,7 @@
         <ul class="message-list">
           <template v-for="message in orderdMessages">
             <li class="message-list__message" :key="message.id" :class="{opponent: currentUser.name === message.user.name}">
-              <v-avatar v-if="!currentUser.id" @click="OpenModalContents('isOtherUserProfile')" class="message-list__message--image">
+              <v-avatar v-if="currentUser.id !== message.user.id" @click="OpenModalContents('isOtherUserProfile')" class="message-list__message--image">
                 <img
                   src="https://cdn.vuetifyjs.com/images/john.jpg"
                   alt="John"

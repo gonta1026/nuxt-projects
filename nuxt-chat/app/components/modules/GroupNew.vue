@@ -37,6 +37,7 @@
               multiple
               >
               </v-select>
+              <p v-for="user in addUserList" :key='user.id'>{{user.id}}、</p>
           </v-row>
         </v-col>
         <v-row class="form__description">

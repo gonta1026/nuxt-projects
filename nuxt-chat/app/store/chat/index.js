@@ -122,18 +122,20 @@ export const actions = {
     try {
       // const uploadTask = await firestorage.ref('images/' + fileName).put(user.avator);
       // const url = await uploadTask.ref.getDownloadURL();
-      const result = await firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
+      await firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
       // console.log("結果は", result.user)
-      usersRef.add({
+      const addUser = await usersRef.add({
         name: user.name,
         email: user.email,
         // avator: url,
         created: firebase.firestore.FieldValue.serverTimestamp()
       })
+
+      const userDoc = await addUser.get();
       const currentUser = {
-        id: firebase.auth().currentUser.uid,
-        name: user.name,
-        email: user.email
+        id: userDoc.id,
+        name: userDoc.data().name,
+        email: userDoc.data().email
       };
       commit("setCurrentUser", currentUser);
     } catch {
@@ -144,7 +146,6 @@ export const actions = {
 
   async login({state, commit}, user){
     try {
-      console.log(state.users);
       const result = await firebase.auth().signInWithEmailAndPassword(user.email, user.password);
       const currentUser = _.find(state.users, user => user.email === result.user.email)
       commit('setCurrentUser', currentUser)
@@ -200,8 +201,6 @@ export const actions = {
 
   addMessage({state}, {message, pass}){
     const messages = db.collection('groups').doc(pass).collection("messages");
-    console.log(state.currentUser.id)
-    console.log(state.currentUser.name)
     messages.add({
       message: message,
       created: firebase.firestore.FieldValue.serverTimestamp(),
@@ -213,10 +212,6 @@ export const actions = {
   },
 
   addGroup: firestoreAction(({state}, group) => {
-    console.log(group.name);
-    console.log(group.description);
-    console.log(group.selectedUsers);
-    console.log(state.currentUser.id);
     groupsRef.add({
       name: group.name,
       description: group.description,

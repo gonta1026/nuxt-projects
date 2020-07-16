@@ -14,6 +14,9 @@
             sm="8"
             md="4"
           >
+          <p>まだバリデーションは対応しておりません💦</p>
+          <p>email: test001@gmail.com</p>
+          <p>password: test-001</p>
             <v-card class="elevation-12">
               <v-toolbar
                 color="primary"
