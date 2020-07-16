@@ -1,7 +1,8 @@
 <template>
   <div>
     <div>
-      <ModalArea/>
+      <ModalArea
+      />
     </div>
     <PageHeader />
     <v-content>
@@ -16,7 +17,7 @@
         <ul class="message-list">
           <template v-for="message in orderdMessages">
             <li class="message-list__message" :key="message.id" :class="{opponent: currentUser.name === message.user.name}">
-              <v-avatar v-if="currentUser.id !== message.user.id" @click="OpenModalContents('isOtherUserProfile')" class="message-list__message--image">
+              <v-avatar v-if="currentUser.id !== message.user.id" @click="openProfile(message.user.id)" class="message-list__message--image">
                 <img
                   src="https://cdn.vuetifyjs.com/images/john.jpg"
                   alt="John"
@@ -55,7 +56,7 @@
 
 <script>
 
-import {mapMutations, mapActions, mapGetters } from 'vuex'
+import {mapMutations, mapGetters } from 'vuex'
 
 export default {
   head: {
@@ -87,17 +88,18 @@ export default {
   },
   
   methods: {
-    hoge(){
-      this.isActive = !this.isActive;
-    },
     ...mapMutations("chat", ["OpenModalContents"]),
-
     addMessage(messageAndPass){
       if(messageAndPass.message === ""){
         return false
       }
       this.$store.dispatch("chat/addMessage", messageAndPass, this.currentUser);
       this.message = "";
+    },
+    openProfile(userId){
+      console.log(userId)
+      this.$store.commit("chat/setProfileUserId", userId);
+      this.$store.commit("chat/OpenModalContents", "isOtherUserProfile");
     }
   }
 }

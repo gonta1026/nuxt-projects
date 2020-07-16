@@ -27,6 +27,8 @@ export const state = () => ({
     name: "",
   },
 
+  profileUserId: "",
+
   modalActive: {
     isMaskActive: false,
     isGroupNewFrom: false,
@@ -45,6 +47,8 @@ export const getters = {
   orderdMessages: state => _.sortBy(state.messages, 'created'),
   addUserList: state => _.filter(state.users, user => user.id !== state.currentUser.id),
   targetGroup: state =>　pageId =>  _.find(state.groups, group => group.id === pageId),
+  userProfile: state => 
+    _.find(state.users, user => user.id === state.profileUserId),
   notBelongsUsers: (state, getters) => (pageId) => {
     return _.filter(state.users, user => {
       if (!getters.targetGroup(pageId).userIds.includes(user.id)) {
@@ -103,6 +107,11 @@ export const mutations = {
   OpenModalContents(state, content) {
     state.modalActive.isMaskActive = true;
     state.modalActive[content] = true;
+  },
+  
+  setProfileUserId(state, userId) {
+    console.log(userId)
+    state.profileUserId = userId;
   },
 }
 

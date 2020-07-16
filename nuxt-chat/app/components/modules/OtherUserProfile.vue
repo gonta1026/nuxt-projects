@@ -9,29 +9,28 @@
     <v-card-title 
       class="blue darken-2"
       >
-      User profile（一般ユーザーの簡単なプロフィール）
+      User profile（これから増やしたい）
     </v-card-title>
     <v-container>
       <v-row class="mx-2">
-
+        <p>name: {{userProfile.name}}</p>
       </v-row>
     </v-container>
-    <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-btn
-        text
-        @click="dialog = false"
-      >Save</v-btn>
-    </v-card-actions>
+
   </v-card>
   </v-col>
 </template>
 
 <script>
-  export default {
-    data: () => ({
-    }),
-  }
+
+import { mapGetters } from 'vuex'
+
+export default {
+  computed: {
+    ...mapGetters("chat", ["currentGroup", "userProfile"])
+  },
+  
+}
 </script>
 
 <style lang="scss" scoped>
